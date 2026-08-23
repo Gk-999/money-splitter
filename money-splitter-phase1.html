@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2563eb">
+<meta name="description" content="Free group expense calculator. Track contributions, split expenses and see who owes whom. No signup required.">
+<title>Money Splitter — Free Group Expense Calculator</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f6f8;color:#1f2937}
+.app{max-width:720px;margin:auto;min-height:100vh;background:#f4f6f8}
+header{background:#2563eb;color:white;padding:22px 18px;border-radius:0 0 18px 18px}
+header h1{margin:0;font-size:25px}header p{margin:6px 0 0;opacity:.9}
+main{padding:16px}.card{background:white;border-radius:14px;padding:16px;margin-bottom:15px;box-shadow:0 2px 8px #00000012}
+h2{font-size:18px;margin:0 0 14px}.row{display:flex;gap:10px}.row>*{flex:1}
+input,select{width:100%;padding:11px;border:1px solid #d1d5db;border-radius:8px;font-size:15px;background:white}
+button{border:0;border-radius:9px;padding:11px 15px;font-weight:700;cursor:pointer}
+.primary{background:#2563eb;color:#fff}.muted{background:#e5e7eb}.danger{background:#fee2e2;color:#b91c1c}
+.participant{display:grid;grid-template-columns:1fr 130px 40px;gap:8px;margin-bottom:8px;align-items:center}
+.expense{display:grid;grid-template-columns:1.4fr 100px 1fr 40px;gap:8px;margin-bottom:8px;align-items:center}
+.small{font-size:12px;color:#6b7280}.money{font-weight:700}.summary{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:#f8fafc;padding:13px;border-radius:10px}.stat .value{font-size:21px;font-weight:700;margin-top:4px}
+.balance{padding:12px;border-radius:10px;margin:7px 0;background:#f8fafc}.good{color:#15803d}.bad{color:#dc2626}
+.settle{padding:13px;background:#eff6ff;border-left:4px solid #2563eb;border-radius:7px;margin:8px 0}
+.empty{text-align:center;color:#6b7280;padding:15px}.share-actions{display:flex;gap:10px;margin-top:12px}.share-actions button{flex:1}.more summary{cursor:pointer;font-weight:700;list-style:none}.more summary::-webkit-details-marker{display:none}.more summary:after{content:"▾";float:right}.more[open] summary:after{content:"▴"}.more-body{margin-top:14px}.notice{background:#f8fafc;border:1px solid #e5e7eb;padding:10px;border-radius:9px;font-size:12px;color:#6b7280;margin-top:10px}
+@media(max-width:560px){.share-actions{flex-direction:column}}
+@media(max-width:560px){.row{flex-direction:column}.participant{grid-template-columns:1fr 100px 38px}.expense{grid-template-columns:1fr 90px}.expense select{grid-column:1}.expense button{grid-column:2;grid-row:1}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><h1>💰 Money Splitter</h1><p>Track contributions, expenses and settle up.</p></header>
+<main>
+<section class="card">
+<h2>1. Participants & Contributions</h2>
+<div id="participants"></div>
+<p class="small">Enter how much each person has contributed to the common pool.</p>
+<button class="muted" onclick="addParticipant()">＋ Add Participant</button>
+</section>
+
+<section class="card">
+<h2>2. Add Expense</h2>
+<div class="row">
+<input id="desc" placeholder="Expense description">
+<input id="amount" type="number" min="0" step="0.01" placeholder="Amount ₹">
+</div>
+<div class="row" style="margin-top:10px">
+<div style="display:flex;align-items:center;padding:11px;border:1px solid #d1d5db;border-radius:8px;background:#f8fafc;font-size:15px">💰 Common Pool</div>
+<button class="primary" onclick="addExpense()">＋ Add Expense</button>
+</div>
+<div id="expenses" style="margin-top:14px"></div>
+</section>
+
+<section class="card">
+<h2>3. Summary</h2>
+<div class="summary" id="stats"></div>
+<div id="balances" style="margin-top:12px"></div>
+</section>
+
+<section class="card">
+<h2>4. Settle Up</h2>
+<div id="settlement"></div>
+<div class="share-actions">
+ <button class="primary" onclick="shareWhatsApp()">📱 Share Settlement → WhatsApp</button>
+ <button class="muted" onclick="copyShareLink()">🔗 Copy Shareable Link</button>
+</div>
+<div class="notice">The shareable link contains the current project data in the URL. No account or server storage is required.</div>
+</section>
+
+<section class="card">
+<details class="more">
+ <summary>5. More</summary>
+ <div class="more-body">
+  <div class="row">
+   <button class="muted" onclick="saveProject()">💾 Save Project</button>
+   <button class="muted" onclick="document.getElementById('importFile').click()">📂 Import Project</button>
+   <input id="importFile" type="file" accept=".json,application/json" style="display:none" onchange="importProject(event)">
+  </div>
+  <p class="small" style="margin-top:10px">Save an event, tour or party as a JSON file and import it later. Contributions are stored separately from expenses.</p>
+  <button class="danger" onclick="resetApp()">Reset Everything</button>
+ </div>
+</details>
+</section>
+</main>
+</div>
+
+<script>
+let data=JSON.parse(localStorage.getItem("moneySplitter")||"null")||{
+ participants:[{id:1,name:"Person 1",upfront:0},{id:2,name:"Person 2",upfront:0}],
+ expenses:[]
+};
+
+function save(){localStorage.setItem("moneySplitter",JSON.stringify(data))}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function addParticipant(){data.participants.push({id:Date.now(),name:"Person "+(data.participants.length+1),upfront:0});save();render()}
+function removeParticipant(id){
+ if(data.participants.length<=1)return alert("At least one participant is required.");
+ if(data.expenses.some(e=>e.paidBy===id))return alert("This person has expenses. Delete/reassign those expenses first.");
+ data.participants=data.participants.filter(p=>p.id!==id);save();render()
+}
+function updateP(id,field,value){
+ let p=data.participants.find(x=>x.id===id); if(field==="upfront") value=Number(value)||0;
+ p[field]=value;save();calculate()
+}
+function renderParticipants(){
+ let el=document.getElementById("participants");
+ el.innerHTML=data.participants.map(p=>`
+ <div class="participant">
+ <input value="${esc(p.name)}" onchange="updateP(${p.id},'name',this.value)">
+ <input type="number" min="0" step=".01" value="${p.upfront}" onchange="updateP(${p.id},'upfront',this.value)" title="Contribution to common pool">
+ <button class="danger" onclick="removeParticipant(${p.id})">×</button>
+ </div>`).join("");
+
+}
+function addExpense(){
+ let desc=document.getElementById("desc").value.trim(),
+     amount=Number(document.getElementById("amount").value);
+
+ if(!desc||amount<=0)return alert("Enter a description and valid amount.");
+
+ data.expenses.push({
+   id:Date.now(),
+   desc,
+   amount,
+   paidFrom:"pool"
+ });
+
+ document.getElementById("desc").value="";
+ document.getElementById("amount").value="";
+ save();
+ render();
+}
+
+function removeExpense(id){data.expenses=data.expenses.filter(e=>e.id!==id);save();render()}
+function renderExpenses(){
+ let el=document.getElementById("expenses");
+
+ if(!data.expenses.length){
+   el.innerHTML='<div class="empty">No expenses added yet.</div>';
+   return;
+ }
+
+ el.innerHTML=data.expenses.map(e=>{
+   return `<div class="expense">
+     <div>
+       ${esc(e.desc)}
+       <div class="small">Paid from Common Pool</div>
+     </div>
+     <div class="money">₹${Number(e.amount).toFixed(2)}</div>
+     <div></div>
+     <button class="danger" onclick="removeExpense(${e.id})">×</button>
+   </div>`;
+ }).join("");
+}
+
+function calculate(){
+ let total=data.expenses.reduce((s,e)=>s+Number(e.amount||0),0),
+     n=data.participants.length,
+     share=n?total/n:0;
+
+ let balances=data.participants.map(p=>{
+   let contribution=Number(p.upfront)||0;
+
+   return {
+     ...p,
+     contribution,
+     balance:contribution-share
+   };
+ });
+
+ document.getElementById("stats").innerHTML=`
+   <div class="stat">
+     <div class="small">Total expenses</div>
+     <div class="value">₹${total.toFixed(2)}</div>
+   </div>
+   <div class="stat">
+     <div class="small">Equal share / person</div>
+     <div class="value">₹${share.toFixed(2)}</div>
+   </div>`;
+
+ document.getElementById("balances").innerHTML=balances.map(b=>`
+   <div class="balance">
+     <strong>${esc(b.name)}</strong>
+     — Contribution ₹${b.contribution.toFixed(2)}
+     <span class="${b.balance>=-.01?'good':'bad'}">
+       · ${b.balance>=-.01?'gets back':'owes'} ₹${Math.abs(b.balance).toFixed(2)}
+     </span>
+   </div>`).join("");
+
+ settle(balances);
+}
+
+function settle(bs){
+ let debt=bs.filter(x=>x.balance<-.01).map(x=>({...x,rem:-x.balance})),credit=bs.filter(x=>x.balance>.01).map(x=>({...x,rem:x.balance}));
+ let out=[],i=0,j=0;
+ while(i<debt.length&&j<credit.length){let a=Math.min(debt[i].rem,credit[j].rem);out.push(`<div class="settle"><strong>${esc(debt[i].name)}</strong> pays <strong>${esc(credit[j].name)}</strong> <strong>₹${a.toFixed(2)}</strong></div>`);debt[i].rem-=a;credit[j].rem-=a;if(debt[i].rem<.01)i++;if(credit[j].rem<.01)j++}
+ document.getElementById("settlement").innerHTML=out.length?out:'<div class="empty">Everyone is settled up 🎉</div>'
+}
+function encodeSharedData(){
+ let payload={
+  v:1,
+  participants:data.participants.map(p=>({id:p.id,name:p.name,upfront:Number(p.upfront)||0})),
+  expenses:data.expenses.map(e=>({id:e.id,desc:e.desc,amount:Number(e.amount)||0}))
+ };
+ let json=JSON.stringify(payload);
+ let bytes=new TextEncoder().encode(json);
+ let binary="";
+ bytes.forEach(b=>binary+=String.fromCharCode(b));
+ return btoa(binary).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/g,"");
+}
+
+function decodeSharedData(encoded){
+ let base64=encoded.replace(/-/g,"+").replace(/_/g,"/");
+ while(base64.length%4)base64+="=";
+ let binary=atob(base64), bytes=new Uint8Array(binary.length);
+ for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+ let json=new TextDecoder().decode(bytes), payload=JSON.parse(json);
+ if(!payload || payload.v!==1 || !Array.isArray(payload.participants) || !Array.isArray(payload.expenses))
+  throw new Error("Invalid shared project.");
+ if(!payload.participants.length)throw new Error("Shared project has no participants.");
+ let ids=new Set(payload.participants.map(p=>p.id));
+ payload.participants.forEach(p=>{
+  if(p.id===undefined || typeof p.name!=="string")throw new Error("Invalid participant data.");
+  p.upfront=Number(p.upfront)||0;
+ });
+ payload.expenses.forEach(e=>{
+  if(e.id===undefined || typeof e.desc!=="string" || Number(e.amount)<=0)throw new Error("Invalid expense data.");
+  e.amount=Number(e.amount);
+  e.paidFrom="pool";
+  delete e.paidBy;
+ });
+ return {participants:payload.participants,expenses:payload.expenses};
+}
+
+function getShareUrl(){
+ return location.href.split("#")[0]+"#share="+encodeSharedData();
+}
+
+function getSettlementText(){
+ let total=data.expenses.reduce((s,e)=>s+Number(e.amount||0),0),
+     n=data.participants.length,
+     share=n?total/n:0,
+     balances=data.participants.map(p=>({
+       name:p.name,
+       balance:(Number(p.upfront)||0)-share
+     })),
+     debt=balances.filter(x=>x.balance<-.01).map(x=>({...x,rem:-x.balance})),
+     credit=balances.filter(x=>x.balance>.01).map(x=>({...x,rem:x.balance}));
+ let lines=[],i=0,j=0;
+ while(i<debt.length&&j<credit.length){
+  let a=Math.min(debt[i].rem,credit[j].rem);
+  lines.push(`${debt[i].name} → ${credit[j].name}: ₹${a.toFixed(2)}`);
+  debt[i].rem-=a; credit[j].rem-=a;
+  if(debt[i].rem<.01)i++;
+  if(credit[j].rem<.01)j++;
+ }
+ return [
+  "💰 Money Splitter — Settlement",
+  "",
+  `Total expenses: ₹${total.toFixed(2)}`,
+  `People: ${n}`,
+  `Equal share: ₹${share.toFixed(2)}`,
+  "",
+  lines.length?lines.join("\n"):"Everyone is settled up 🎉",
+  "",
+  "Open this calculation:",
+  getShareUrl()
+ ].join("\n");
+}
+
+async function copyShareLink(){
+ let url=getShareUrl();
+ try{
+  await navigator.clipboard.writeText(url);
+  alert("Shareable link copied. You can paste it into WhatsApp or anywhere else.");
+ }catch(e){
+  prompt("Copy this shareable link:",url);
+ }
+}
+
+function shareWhatsApp(){
+ let text=getSettlementText();
+ let url="https://wa.me/?text="+encodeURIComponent(text);
+ window.open(url,"_blank","noopener,noreferrer");
+}
+
+function loadSharedProject(){
+ let match=location.hash.match(/^#share=(.+)$/);
+ if(!match)return false;
+ try{
+  let shared=decodeSharedData(match[1]);
+  data=shared;
+  return true;
+ }catch(e){
+  alert("This shared link could not be opened: "+e.message);
+  history.replaceState(null,"",location.pathname+location.search);
+  return false;
+ }
+}
+
+function saveProject(){
+ let project={
+  app:"Money Splitter",
+  version:1,
+  exportedAt:new Date().toISOString(),
+  participants:data.participants,
+  expenses:data.expenses
+ };
+ let blob=new Blob([JSON.stringify(project,null,2)],{type:"application/json"});
+ let url=URL.createObjectURL(blob);
+ let a=document.createElement("a");
+ a.href=url;
+ a.download="money-splitter-"+new Date().toISOString().slice(0,10)+".json";
+ document.body.appendChild(a);
+ a.click();
+ a.remove();
+ URL.revokeObjectURL(url);
+}
+
+function importProject(event){
+ let file=event.target.files[0];
+ if(!file)return;
+
+ let reader=new FileReader();
+
+ reader.onload=function(){
+  try{
+   let imported=JSON.parse(reader.result);
+
+   if(!imported || !Array.isArray(imported.participants) || !Array.isArray(imported.expenses))
+    throw new Error("Invalid Money Splitter project file.");
+
+   if(imported.participants.length===0)
+    throw new Error("Project must contain at least one participant.");
+
+   let ids=new Set(imported.participants.map(p=>p.id));
+
+   imported.participants.forEach(p=>{
+    if(p.id===undefined || typeof p.name!=="string")
+     throw new Error("Invalid participant data.");
+    p.upfront=Number(p.upfront)||0;
+   });
+
+   imported.expenses.forEach(e=>{
+    if(e.id===undefined || typeof e.desc!=="string" || Number(e.amount)<=0)
+     throw new Error("Invalid expense data.");
+    e.amount=Number(e.amount);
+    e.paidFrom="pool";
+    delete e.paidBy;
+   });
+
+   if(!confirm("Import this project? Current data will be replaced."))
+    return;
+
+   data={
+    participants:imported.participants,
+    expenses:imported.expenses
+   };
+
+   save();
+   render();
+   alert("Project imported successfully.");
+  }
+  catch(err){
+   alert("Could not import project: "+err.message);
+  }
+  finally{
+   event.target.value="";
+  }
+ };
+
+ reader.readAsText(file);
+}
+
+function resetApp(){if(confirm("Reset all participants and expenses?")){localStorage.removeItem("moneySplitter");history.replaceState(null,"",location.pathname+location.search);location.reload()}}
+function render(){renderParticipants();renderExpenses();calculate()}
+loadSharedProject();
+render();
+window.addEventListener("hashchange",()=>{
+ if(location.hash.startsWith("#share=")){
+  if(loadSharedProject())render();
+ }
+});
+</script>
+</body>
+</html>
