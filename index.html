@@ -24,17 +24,17 @@ button{border:0;border-radius:9px;padding:11px 15px;font-weight:700;cursor:point
 .settle{padding:13px;background:#eff6ff;border-left:4px solid #2563eb;border-radius:7px;margin:8px 0}
 .empty{text-align:center;color:#6b7280;padding:15px}.share-actions{display:flex;gap:10px;margin-top:12px}.share-actions button{flex:1}.more summary{cursor:pointer;font-weight:700;list-style:none}.more summary::-webkit-details-marker{display:none}.more summary:after{content:"▾";float:right}.more[open] summary:after{content:"▴"}.more-body{margin-top:14px}.notice{background:#f8fafc;border:1px solid #e5e7eb;padding:10px;border-radius:9px;font-size:12px;color:#6b7280;margin-top:10px}
 @media(max-width:560px){.share-actions{flex-direction:column}}
-@media(max-width:560px){.row{flex-direction:column}.participant{grid-template-columns:1fr 100px 38px}.expense{grid-template-columns:1fr 90px}.expense select{grid-column:1}.expense button{grid-column:2;grid-row:1}}
+@media(max-width:560px){.row{flex-direction:column}.participant{grid-template-columns:1fr 38px}.expense{grid-template-columns:1fr 90px}.expense button{grid-column:2;grid-row:1}}
 </style>
 </head>
 <body>
 <div class="app">
-<header><h1>💰 Money Splitter</h1><p>Track contributions, expenses and settle up.</p></header>
+<header><h1>💰 Money Splitter</h1><p>Track group expenses and settle up.</p></header>
 <main>
 <section class="card">
-<h2>1. Participants & Contributions</h2>
+<h2>1. Participants</h2>
 <div id="participants"></div>
-<p class="small">Enter how much each person has contributed to the common pool.</p>
+
 <button class="muted" onclick="addParticipant()">＋ Add Participant</button>
 </section>
 
@@ -45,7 +45,7 @@ button{border:0;border-radius:9px;padding:11px 15px;font-weight:700;cursor:point
 <input id="amount" type="number" min="0" step="0.01" placeholder="Amount ₹">
 </div>
 <div class="row" style="margin-top:10px">
-<div style="display:flex;align-items:center;padding:11px;border:1px solid #d1d5db;border-radius:8px;background:#f8fafc;font-size:15px">💰 Common Pool</div>
+<select id="paidBy" aria-label="Paid by"></select>
 <button class="primary" onclick="addExpense()">＋ Add Expense</button>
 </div>
 <div id="expenses" style="margin-top:14px"></div>
@@ -64,7 +64,7 @@ button{border:0;border-radius:9px;padding:11px 15px;font-weight:700;cursor:point
  <button class="primary" onclick="shareWhatsApp()">📱 Share Settlement → WhatsApp</button>
  <button class="muted" onclick="copyShareLink()">🔗 Copy Shareable Link</button>
 </div>
-<div class="notice">The shareable link contains the current project data in the URL. No account or server storage is required.</div>
+<div class="notice">The shareable link stores the project in the URL using lightweight obfuscation. No account or server storage is required.</div>
 </section>
 
 <section class="card">
@@ -76,7 +76,7 @@ button{border:0;border-radius:9px;padding:11px 15px;font-weight:700;cursor:point
    <button class="muted" onclick="document.getElementById('importFile').click()">📂 Import Project</button>
    <input id="importFile" type="file" accept=".json,application/json" style="display:none" onchange="importProject(event)">
   </div>
-  <p class="small" style="margin-top:10px">Save an event, tour or party as a JSON file and import it later. Contributions are stored separately from expenses.</p>
+  <p class="small" style="margin-top:10px">Save an event, tour or party as a JSON file and import it later.</p>
   <button class="danger" onclick="resetApp()">Reset Everything</button>
  </div>
 </details>
@@ -86,43 +86,56 @@ button{border:0;border-radius:9px;padding:11px 15px;font-weight:700;cursor:point
 
 <script>
 let data=JSON.parse(localStorage.getItem("moneySplitter")||"null")||{
- participants:[{id:1,name:"Person 1",upfront:0},{id:2,name:"Person 2",upfront:0}],
+ participants:[{id:1,name:"Person 1"},{id:2,name:"Person 2"}],
  expenses:[]
 };
 
+function normalizeData(){
+ data.participants.forEach(p=>delete p.upfront);
+ data.expenses.forEach(e=>{
+   delete e.paidFrom;
+   if(e.paidBy!==undefined)e.paidBy=Number(e.paidBy);
+ });
+}
+
 function save(){localStorage.setItem("moneySplitter",JSON.stringify(data))}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-function addParticipant(){data.participants.push({id:Date.now(),name:"Person "+(data.participants.length+1),upfront:0});save();render()}
+function addParticipant(){data.participants.push({id:Date.now(),name:"Person "+(data.participants.length+1)});save();render()}
 function removeParticipant(id){
  if(data.participants.length<=1)return alert("At least one participant is required.");
  if(data.expenses.some(e=>e.paidBy===id))return alert("This person has expenses. Delete/reassign those expenses first.");
  data.participants=data.participants.filter(p=>p.id!==id);save();render()
 }
 function updateP(id,field,value){
- let p=data.participants.find(x=>x.id===id); if(field==="upfront") value=Number(value)||0;
- p[field]=value;save();calculate()
+ let p=data.participants.find(x=>x.id===id);
+ if(!p)return;
+ p[field]=value;
+ save();
+ render();
 }
+
 function renderParticipants(){
  let el=document.getElementById("participants");
  el.innerHTML=data.participants.map(p=>`
  <div class="participant">
- <input value="${esc(p.name)}" onchange="updateP(${p.id},'name',this.value)">
- <input type="number" min="0" step=".01" value="${p.upfront}" onchange="updateP(${p.id},'upfront',this.value)" title="Contribution to common pool">
- <button class="danger" onclick="removeParticipant(${p.id})">×</button>
+   <input value="${esc(p.name)}" onchange="updateP(${p.id},'name',this.value)">
+   <button class="danger" onclick="removeParticipant(${p.id})">×</button>
  </div>`).join("");
-
 }
+
 function addExpense(){
  let desc=document.getElementById("desc").value.trim(),
-     amount=Number(document.getElementById("amount").value);
+     amount=Number(document.getElementById("amount").value),
+     paidBy=Number(document.getElementById("paidBy").value);
 
  if(!desc||amount<=0)return alert("Enter a description and valid amount.");
+ if(!paidBy)return alert("Select who paid this expense.");
 
  data.expenses.push({
    id:Date.now(),
    desc,
    amount,
-   paidFrom:"pool"
+   paidBy
  });
 
  document.getElementById("desc").value="";
@@ -141,13 +154,13 @@ function renderExpenses(){
  }
 
  el.innerHTML=data.expenses.map(e=>{
+   let p=data.participants.find(x=>Number(x.id)===Number(e.paidBy));
    return `<div class="expense">
      <div>
        ${esc(e.desc)}
-       <div class="small">Paid from Common Pool</div>
+       <div class="small">Paid by ${esc(p?.name||"Unknown")}</div>
      </div>
      <div class="money">₹${Number(e.amount).toFixed(2)}</div>
-     <div></div>
      <button class="danger" onclick="removeExpense(${e.id})">×</button>
    </div>`;
  }).join("");
@@ -159,12 +172,14 @@ function calculate(){
      share=n?total/n:0;
 
  let balances=data.participants.map(p=>{
-   let contribution=Number(p.upfront)||0;
+   let paid=data.expenses
+     .filter(e=>Number(e.paidBy)===Number(p.id))
+     .reduce((s,e)=>s+Number(e.amount||0),0);
 
    return {
      ...p,
-     contribution,
-     balance:contribution-share
+     paid,
+     balance:paid-share
    };
  });
 
@@ -181,7 +196,7 @@ function calculate(){
  document.getElementById("balances").innerHTML=balances.map(b=>`
    <div class="balance">
      <strong>${esc(b.name)}</strong>
-     — Contribution ₹${b.contribution.toFixed(2)}
+     — Paid ₹${b.paid.toFixed(2)}
      <span class="${b.balance>=-.01?'good':'bad'}">
        · ${b.balance>=-.01?'gets back':'owes'} ₹${Math.abs(b.balance).toFixed(2)}
      </span>
@@ -196,86 +211,177 @@ function settle(bs){
  while(i<debt.length&&j<credit.length){let a=Math.min(debt[i].rem,credit[j].rem);out.push(`<div class="settle"><strong>${esc(debt[i].name)}</strong> pays <strong>${esc(credit[j].name)}</strong> <strong>₹${a.toFixed(2)}</strong></div>`);debt[i].rem-=a;credit[j].rem-=a;if(debt[i].rem<.01)i++;if(credit[j].rem<.01)j++}
  document.getElementById("settlement").innerHTML=out.length?out:'<div class="empty">Everyone is settled up 🎉</div>'
 }
+normalizeData();
+
 function encodeSharedData(){
  let payload={
-  v:1,
-  participants:data.participants.map(p=>({id:p.id,name:p.name,upfront:Number(p.upfront)||0})),
-  expenses:data.expenses.map(e=>({id:e.id,desc:e.desc,amount:Number(e.amount)||0}))
+  v:2,
+  participants:data.participants.map(p=>({id:p.id,name:p.name})),
+  expenses:data.expenses.map(e=>({
+   id:e.id,
+   desc:e.desc,
+   amount:Number(e.amount)||0,
+   paidBy:Number(e.paidBy)
+  }))
  };
- let json=JSON.stringify(payload);
- let bytes=new TextEncoder().encode(json);
+
+ // Lightweight obfuscation: XOR the UTF-8 JSON with a fixed key, then Base64URL encode.
+ // This is NOT encryption; it only keeps raw values from being readable in the URL.
+ let json=JSON.stringify(payload),
+     bytes=new TextEncoder().encode(json),
+     key=new TextEncoder().encode("MoneySplitter-v2"),
+     out=new Uint8Array(bytes.length);
+
+ for(let i=0;i<bytes.length;i++)out[i]=bytes[i]^key[i%key.length];
+
  let binary="";
- bytes.forEach(b=>binary+=String.fromCharCode(b));
- return btoa(binary).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/g,"");
+ for(let i=0;i<out.length;i++)binary+=String.fromCharCode(out[i]);
+
+ return btoa(binary).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
 }
 
 function decodeSharedData(encoded){
  let base64=encoded.replace(/-/g,"+").replace(/_/g,"/");
  while(base64.length%4)base64+="=";
- let binary=atob(base64), bytes=new Uint8Array(binary.length);
- for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
- let json=new TextDecoder().decode(bytes), payload=JSON.parse(json);
- if(!payload || payload.v!==1 || !Array.isArray(payload.participants) || !Array.isArray(payload.expenses))
-  throw new Error("Invalid shared project.");
- if(!payload.participants.length)throw new Error("Shared project has no participants.");
- let ids=new Set(payload.participants.map(p=>p.id));
+
+ let binary=atob(base64),
+     bytes=new Uint8Array(binary.length),
+     key=new TextEncoder().encode("MoneySplitter-v2");
+
+ for(let i=0;i<binary.length;i++)
+   bytes[i]=binary.charCodeAt(i)^key[i%key.length];
+
+ let json=new TextDecoder().decode(bytes),
+     payload=JSON.parse(json);
+
+ if(!payload || ![1,2].includes(payload.v) ||
+    !Array.isArray(payload.participants) ||
+    !Array.isArray(payload.expenses))
+   throw new Error("Invalid shared project.");
+
+ if(!payload.participants.length)
+   throw new Error("Shared project has no participants.");
+
+ let ids=new Set(payload.participants.map(p=>Number(p.id)));
+
  payload.participants.forEach(p=>{
-  if(p.id===undefined || typeof p.name!=="string")throw new Error("Invalid participant data.");
-  p.upfront=Number(p.upfront)||0;
+   if(p.id===undefined || typeof p.name!=="string")
+     throw new Error("Invalid participant data.");
+   delete p.upfront;
  });
+
  payload.expenses.forEach(e=>{
-  if(e.id===undefined || typeof e.desc!=="string" || Number(e.amount)<=0)throw new Error("Invalid expense data.");
-  e.amount=Number(e.amount);
-  e.paidFrom="pool";
-  delete e.paidBy;
+   if(e.id===undefined || typeof e.desc!=="string" || Number(e.amount)<=0)
+     throw new Error("Invalid expense data.");
+
+   if(payload.v===2){
+     if(!ids.has(Number(e.paidBy)))
+       throw new Error("Invalid expense payer.");
+     e.paidBy=Number(e.paidBy);
+   }else{
+     // v1 shared links came from the old common-pool model.
+     // They cannot be converted reliably to the new per-expense payer model.
+     throw new Error("This shared link was created with an older version. Please create a new share link.");
+   }
+
+   e.amount=Number(e.amount);
+   delete e.paidFrom;
  });
+
  return {participants:payload.participants,expenses:payload.expenses};
 }
 
 function getShareUrl(){
- return location.href.split("#")[0]+"#share="+encodeSharedData();
+ return location.origin+location.pathname+"#share="+encodeSharedData();
+}
+
+function getWebsiteUrl(){
+ return location.origin+location.pathname;
 }
 
 function getSettlementText(){
  let total=data.expenses.reduce((s,e)=>s+Number(e.amount||0),0),
-     n=data.participants.length,
-     share=n?total/n:0,
-     balances=data.participants.map(p=>({
-       name:p.name,
-       balance:(Number(p.upfront)||0)-share
-     })),
-     debt=balances.filter(x=>x.balance<-.01).map(x=>({...x,rem:-x.balance})),
+     share=data.participants.length?total/data.participants.length:0;
+
+ let balances=data.participants.map(p=>{
+   let paid=data.expenses
+     .filter(e=>Number(e.paidBy)===Number(p.id))
+     .reduce((s,e)=>s+Number(e.amount||0),0);
+
+   return {...p,paid,balance:paid-share};
+ });
+
+ let lines=[];
+ lines.push("💰 Money Splitter — Settlement");
+ lines.push("");
+ lines.push(`Total expenses: ₹${total.toFixed(2)}`);
+ lines.push(`People: ${data.participants.length}`);
+ lines.push(`Equal share: ₹${share.toFixed(2)}`);
+ lines.push("");
+
+ lines.push("📋 All expenses");
+ lines.push("");
+ data.expenses.forEach(e=>{
+   let p=data.participants.find(x=>Number(x.id)===Number(e.paidBy));
+   lines.push(`• ${e.desc} — ₹${Number(e.amount).toFixed(2)} — paid by ${p?.name||"Unknown"}`);
+ });
+ lines.push("");
+
+ lines.push("💸 Settlement");
+ lines.push("");
+
+ let debt=balances.filter(x=>x.balance<-.01).map(x=>({...x,rem:-x.balance})),
      credit=balances.filter(x=>x.balance>.01).map(x=>({...x,rem:x.balance}));
- let lines=[],i=0,j=0;
+
+ let i=0,j=0;
  while(i<debt.length&&j<credit.length){
-  let a=Math.min(debt[i].rem,credit[j].rem);
-  lines.push(`${debt[i].name} → ${credit[j].name}: ₹${a.toFixed(2)}`);
-  debt[i].rem-=a; credit[j].rem-=a;
-  if(debt[i].rem<.01)i++;
-  if(credit[j].rem<.01)j++;
+   let amount=Math.min(debt[i].rem,credit[j].rem);
+   lines.push(`${debt[i].name} → ${credit[j].name}: ₹${amount.toFixed(2)}`);
+   debt[i].rem-=amount;
+   credit[j].rem-=amount;
+   if(debt[i].rem<.01)i++;
+   if(credit[j].rem<.01)j++;
  }
- return [
-  "💰 Money Splitter — Settlement",
-  "",
-  `Total expenses: ₹${total.toFixed(2)}`,
-  `People: ${n}`,
-  `Equal share: ₹${share.toFixed(2)}`,
-  "",
-  lines.length?lines.join("\n"):"Everyone is settled up 🎉",
-  "",
-  "Open this calculation:",
-  getShareUrl()
- ].join("\n");
+
+ if(!debt.length&&!credit.length)
+   lines.push("Everyone is settled up 🎉");
+
+ lines.push("");
+ lines.push("Open Money Splitter:");
+ lines.push(getWebsiteUrl());
+
+ return lines.join("\n");
 }
 
 async function copyShareLink(){
  let url=getShareUrl();
+
  try{
-  await navigator.clipboard.writeText(url);
-  alert("Shareable link copied. You can paste it into WhatsApp or anywhere else.");
- }catch(e){
-  prompt("Copy this shareable link:",url);
- }
+   if(navigator.clipboard && window.isSecureContext){
+     await navigator.clipboard.writeText(url);
+     alert("Shareable link copied.");
+     return;
+   }
+ }catch(e){}
+
+ // Fallback for local files / browsers where Clipboard API is unavailable.
+ let input=document.createElement("textarea");
+ input.value=url;
+ input.setAttribute("readonly","");
+ input.style.position="fixed";
+ input.style.opacity="0";
+ document.body.appendChild(input);
+ input.select();
+
+ let copied=false;
+ try{copied=document.execCommand("copy")}catch(e){}
+
+ input.remove();
+
+ if(copied)
+   alert("Shareable link copied.");
+ else
+   prompt("Copy this shareable link:",url);
 }
 
 function shareWhatsApp(){
@@ -290,6 +396,7 @@ function loadSharedProject(){
  try{
   let shared=decodeSharedData(match[1]);
   data=shared;
+  normalizeData();
   return true;
  }catch(e){
   alert("This shared link could not be opened: "+e.message);
@@ -334,11 +441,10 @@ function importProject(event){
     throw new Error("Project must contain at least one participant.");
 
    let ids=new Set(imported.participants.map(p=>p.id));
-
-   imported.participants.forEach(p=>{
+imported.participants.forEach(p=>{
     if(p.id===undefined || typeof p.name!=="string")
      throw new Error("Invalid participant data.");
-    p.upfront=Number(p.upfront)||0;
+    delete p.upfront;
    });
 
    imported.expenses.forEach(e=>{
@@ -373,7 +479,24 @@ function importProject(event){
 }
 
 function resetApp(){if(confirm("Reset all participants and expenses?")){localStorage.removeItem("moneySplitter");history.replaceState(null,"",location.pathname+location.search);location.reload()}}
-function render(){renderParticipants();renderExpenses();calculate()}
+function render(){
+ renderParticipants();
+
+ let paidByEl=document.getElementById("paidBy");
+ if(paidByEl){
+   let current=paidByEl.value;
+   paidByEl.innerHTML=data.participants.map(p=>
+     `<option value="${p.id}">${esc(p.name)}</option>`
+   ).join("");
+   if(data.participants.some(p=>String(p.id)===String(current)))
+     paidByEl.value=current;
+   else if(data.participants.length)
+     paidByEl.value=data.participants[0].id;
+ }
+
+ renderExpenses();
+ calculate();
+}
 loadSharedProject();
 render();
 window.addEventListener("hashchange",()=>{
