@@ -3,89 +3,312 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#2563eb">
-<meta name="description" content="Free group expense calculator. Track contributions, split expenses and see who owes whom. No signup required.">
-<title>Money Splitter — Free Group Expense Calculator</title>
+<meta name="theme-color" content="#132018">
+<meta name="description" content="PantherSplits — a free group expense calculator. Track who paid what, split it fairly, and settle up in seconds. No signup, no server storage.">
+<title>PantherSplits — Free Group Expense Splitter</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23101a14'/%3E%3Cpath d='M12 26 L19 10 L27 24 Z' fill='%23080c09'/%3E%3Cpath d='M52 26 L45 10 L37 24 Z' fill='%23080c09'/%3E%3Cpath d='M32 18c-12 0-20 9-20 20 0 10 9 18 20 18s20-8 20-18c0-11-8-20-20-20z' fill='%23080c09'/%3E%3Cellipse cx='23.5' cy='37' rx='4.6' ry='5.6' fill='%23f2b134'/%3E%3Cellipse cx='40.5' cy='37' rx='4.6' ry='5.6' fill='%23f2b134'/%3E%3Cellipse cx='23.5' cy='38.2' rx='1.8' ry='4' fill='%23111111'/%3E%3Cellipse cx='40.5' cy='38.2' rx='1.8' ry='4' fill='%23111111'/%3E%3Cpath d='M32 43l-3.4 3.4h6.8z' fill='%233c2b28'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23101a14'/%3E%3Cpath d='M12 26 L19 10 L27 24 Z' fill='%23080c09'/%3E%3Cpath d='M52 26 L45 10 L37 24 Z' fill='%23080c09'/%3E%3Cpath d='M32 18c-12 0-20 9-20 20 0 10 9 18 20 18s20-8 20-18c0-11-8-20-20-20z' fill='%23080c09'/%3E%3Cellipse cx='23.5' cy='37' rx='4.6' ry='5.6' fill='%23f2b134'/%3E%3Cellipse cx='40.5' cy='37' rx='4.6' ry='5.6' fill='%23f2b134'/%3E%3Cellipse cx='23.5' cy='38.2' rx='1.8' ry='4' fill='%23111111'/%3E%3Cellipse cx='40.5' cy='38.2' rx='1.8' ry='4' fill='%23111111'/%3E%3Cpath d='M32 43l-3.4 3.4h6.8z' fill='%233c2b28'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,700;9..144,900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f6f8;color:#1f2937}
-.app{max-width:720px;margin:auto;min-height:100vh;background:#f4f6f8}
-header{background:#2563eb;color:white;padding:22px 18px;border-radius:0 0 18px 18px}
-header h1{margin:0;font-size:25px}header p{margin:6px 0 0;opacity:.9}
-main{padding:16px}.card{background:white;border-radius:14px;padding:16px;margin-bottom:15px;box-shadow:0 2px 8px #00000012}
-h2{font-size:18px;margin:0 0 14px}.row{display:flex;gap:10px}.row>*{flex:1}
-input,select{width:100%;padding:11px;border:1px solid #d1d5db;border-radius:8px;font-size:15px;background:white}
-button{border:0;border-radius:9px;padding:11px 15px;font-weight:700;cursor:pointer}
-.primary{background:#2563eb;color:#fff}.muted{background:#e5e7eb}.danger{background:#fee2e2;color:#b91c1c}
-.participant{display:grid;grid-template-columns:1fr 130px 40px;gap:8px;margin-bottom:8px;align-items:center}
-.expense{display:grid;grid-template-columns:1.4fr 100px 1fr 40px;gap:8px;margin-bottom:8px;align-items:center}
-.small{font-size:12px;color:#6b7280}.money{font-weight:700}.summary{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.stat{background:#f8fafc;padding:13px;border-radius:10px}.stat .value{font-size:21px;font-weight:700;margin-top:4px}
-.balance{padding:12px;border-radius:10px;margin:7px 0;background:#f8fafc}.good{color:#15803d}.bad{color:#dc2626}
-.settle{padding:13px;background:#eff6ff;border-left:4px solid #2563eb;border-radius:7px;margin:8px 0}
-.empty{text-align:center;color:#6b7280;padding:15px}.share-actions{display:flex;gap:10px;margin-top:12px}.share-actions button{flex:1}.more summary{cursor:pointer;font-weight:700;list-style:none}.more summary::-webkit-details-marker{display:none}.more summary:after{content:"▾";float:right}.more[open] summary:after{content:"▴"}.more-body{margin-top:14px}.notice{background:#f8fafc;border:1px solid #e5e7eb;padding:10px;border-radius:9px;font-size:12px;color:#6b7280;margin-top:10px}
-@media(max-width:560px){.share-actions{flex-direction:column}}
-@media(max-width:560px){.row{flex-direction:column}.participant{grid-template-columns:1fr 38px}.expense{grid-template-columns:1fr 90px}.expense button{grid-column:2;grid-row:1}}
+:root{
+ --panther:#0e1412;
+ --jungle-900:#101d15;
+ --jungle-800:#182a1f;
+ --jungle-700:#22392b;
+ --jungle-600:#2d4b39;
+ --amber:#f2b134;
+ --amber-soft:#f7cc6d;
+ --amber-deep:#c98d1e;
+ --leaf:#5fae7c;
+ --cream:#f7f3e7;
+ --paper:#fffdf9;
+ --ink:#171c17;
+ --muted:#767f70;
+ --line:#e8e1cd;
+ --good:#2f8f57;
+ --bad:#bf4a2c;
+ --danger-bg:#fbe3da;
+ --danger-ink:#a8451f;
+ --radius:16px;
+ --shadow:0 12px 28px -14px rgba(16,29,21,.28);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2{font-family:'Fraunces',Georgia,serif;margin:0}
+.app{max-width:1180px;margin:0 auto}
+
+/* header */
+header.hero{
+ background:
+  radial-gradient(560px 280px at 12% -25%, rgba(242,177,52,.22), transparent 60%),
+  radial-gradient(700px 380px at 105% 130%, rgba(95,174,122,.18), transparent 60%),
+  linear-gradient(160deg,var(--jungle-900),var(--panther) 78%);
+ border-bottom:3px solid var(--amber-deep);
+ padding:22px clamp(16px,3vw,32px);
+}
+.hero-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:14px}
+.logo-wrap{
+ width:56px;height:56px;flex:none;padding:8px;border-radius:50%;
+ background:radial-gradient(circle at 30% 25%, rgba(242,177,52,.35), rgba(242,177,52,0) 62%), rgba(255,255,255,.06);
+ border:2px solid rgba(242,177,52,.55);display:flex;align-items:center;justify-content:center;
+}
+.logo-wrap svg{width:100%;height:100%;display:block}
+@keyframes eyeglow{0%,100%{filter:drop-shadow(0 0 0 rgba(242,177,52,.5))}50%{filter:drop-shadow(0 0 5px rgba(242,177,52,.95))}}
+.logo-wrap .eye{animation:eyeglow 4.5s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.logo-wrap .eye{animation:none}}
+.brand-text h1{color:var(--cream);font-size:clamp(22px,3vw,28px);font-weight:700;letter-spacing:.2px}
+.brand-text p{margin:4px 0 0;color:var(--amber-soft);font-size:13.5px;font-weight:500;opacity:.95}
+.hero-actions{display:flex;gap:10px}
+.icon-btn-round{
+ width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.08);
+ border:1px solid rgba(255,255,255,.2);color:var(--cream);display:flex;align-items:center;justify-content:center;
+ cursor:pointer;transition:background .15s ease,color .15s ease,transform .15s ease;
+}
+.icon-btn-round svg{width:17px;height:17px}
+.icon-btn-round:hover{background:var(--amber);color:var(--jungle-900);border-color:var(--amber);transform:translateY(-1px)}
+.icon-btn-round:active{transform:translateY(0)}
+
+/* layout */
+main{padding:clamp(16px,3vw,28px)}
+.layout{display:grid;grid-template-columns:1.35fr 1fr;gap:20px;align-items:start}
+.col{display:flex;flex-direction:column;gap:20px}
+.col-side{position:sticky;top:18px}
+@media (max-width:960px){
+ .layout{grid-template-columns:1fr}
+ .col-side{position:static}
+}
+
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:22px 22px 24px;box-shadow:var(--shadow)}
+.card-head{margin-bottom:16px}
+.eyebrow{display:block;font-size:11px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--amber-deep);margin-bottom:4px}
+.card-head h2{font-size:20px;font-weight:700;color:var(--ink)}
+.card-head p.hint{margin:5px 0 0;font-size:13px;color:var(--muted)}
+
+/* form basics */
+.row{display:flex;gap:10px}
+.row>*{flex:1}
+label.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+input[type=text],input[type=number],input:not([type]),select{
+ width:100%;padding:12px 13px;border:1.5px solid var(--line);border-radius:10px;
+ font-size:14.5px;background:var(--paper);color:var(--ink);font-family:'Manrope',sans-serif;
+}
+input:focus,select:focus{outline:none;border-color:var(--amber-deep);box-shadow:0 0 0 3px rgba(242,177,52,.18)}
+
+/* buttons */
+.btn{border:0;border-radius:11px;padding:12px 18px;font-weight:700;font-family:'Manrope',sans-serif;
+ cursor:pointer;font-size:14.5px;display:inline-flex;align-items:center;gap:8px;justify-content:center;
+ transition:transform .12s ease,box-shadow .12s ease,background .12s ease;white-space:nowrap}
+.btn:active{transform:translateY(1px)}
+.btn svg{width:16px;height:16px;flex:none}
+.btn-primary{background:linear-gradient(135deg,var(--amber-soft),var(--amber-deep));color:var(--jungle-900);box-shadow:0 8px 18px -8px rgba(201,141,30,.6)}
+.btn-primary:hover{box-shadow:0 10px 22px -8px rgba(201,141,30,.75)}
+.btn-ghost{background:var(--jungle-800);color:var(--cream)}
+.btn-ghost:hover{background:var(--jungle-700)}
+.btn-outline{background:var(--paper);color:var(--jungle-800);border:1.5px solid var(--jungle-600)}
+.btn-outline:hover{background:var(--jungle-900);color:var(--cream);border-color:var(--jungle-900)}
+.btn-whatsapp{background:#25D366;color:#0b3b21}
+.btn-whatsapp:hover{background:#20bd5a}
+.btn-block{width:100%}
+
+/* participants */
+.p-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-bottom:14px}
+.p-row{display:flex;align-items:center;gap:8px;background:var(--cream);border:1.5px solid var(--line);border-radius:12px;padding:6px 8px 6px 6px;transition:border-color .12s}
+.p-row:focus-within{border-color:var(--amber-deep);box-shadow:0 0 0 3px rgba(242,177,52,.16)}
+.p-avatar{width:28px;height:28px;border-radius:50%;background:var(--jungle-800);color:var(--amber-soft);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12.5px;flex:none;font-family:'Fraunces',serif}
+.p-input{border:none;background:transparent;flex:1;min-width:0;padding:6px 2px;font-size:14.5px;color:var(--ink)}
+.p-input:focus{outline:none;box-shadow:none;border:none}
+
+/* small round delete buttons */
+.icon-btn{width:26px;height:26px;border-radius:50%;border:0;flex:none;cursor:pointer;font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center;font-weight:700;transition:background .12s,color .12s}
+.danger-btn{background:var(--danger-bg);color:var(--danger-ink)}
+.danger-btn:hover{background:var(--danger-ink);color:#fff}
+
+/* expenses */
+.e-row{display:flex;align-items:center;gap:12px;padding:12px 2px;border-bottom:1px solid var(--line)}
+.e-row:last-child{border-bottom:none}
+.e-main{flex:1;min-width:0}
+.e-desc{font-weight:700;color:var(--ink);font-size:15px}
+.e-meta{font-size:12.5px;color:var(--muted);margin-top:2px}
+.e-meta strong{color:var(--jungle-800)}
+.e-amount{font-weight:800;color:var(--jungle-800);font-size:15px;white-space:nowrap;font-variant-numeric:tabular-nums}
+
+.empty{text-align:center;color:var(--muted);padding:26px 10px;font-style:italic;font-size:14px}
+
+/* summary */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.stat{background:var(--jungle-900);border-radius:12px;padding:14px 16px}
+.stat .label{font-size:10.8px;text-transform:uppercase;letter-spacing:.08em;color:var(--amber-soft);font-weight:800}
+.stat .value{font-family:'Fraunces',serif;font-size:23px;font-weight:700;margin-top:5px;color:var(--cream)}
+
+.balance{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 13px;border-radius:10px;background:var(--cream);border:1px solid var(--line);margin-bottom:8px}
+.balance:last-child{margin-bottom:0}
+.balance .who{font-weight:700;font-size:14px}
+.balance .paid{color:var(--muted);font-weight:500;font-size:12.5px;margin-left:4px}
+.tag{font-weight:800;font-size:12.5px;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.tag.good{color:var(--good);background:#e4f4e9}
+.tag.bad{color:var(--bad);background:var(--danger-bg)}
+
+/* settle */
+.settle-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;background:var(--cream);border:1px solid var(--line);border-left:4px solid var(--amber-deep);border-radius:10px;margin-bottom:9px}
+.settle-row:last-child{margin-bottom:0}
+.settle-flow{display:flex;align-items:center;gap:8px;font-size:14px;flex-wrap:wrap}
+.settle-flow .who{font-weight:700;color:var(--ink)}
+.settle-flow .who.strong{color:var(--jungle-800)}
+.arrow{color:var(--amber-deep);font-weight:800}
+.settle-amt{font-weight:800;color:var(--jungle-800);font-variant-numeric:tabular-nums;white-space:nowrap}
+.share-actions{display:flex;gap:10px;margin-top:14px}
+.share-actions .btn{flex:1}
+.notice{background:var(--cream);border:1px dashed var(--line);padding:10px 12px;border-radius:10px;font-size:12px;color:var(--muted);margin-top:12px;line-height:1.55}
+
+footer.site-footer{text-align:center;color:var(--muted);font-size:12.5px;padding:8px 10px 30px}
+footer.site-footer strong{color:var(--jungle-800)}
+
+@media (max-width:560px){
+ .row{flex-direction:column}
+ .share-actions{flex-direction:column}
+ .stats-grid{grid-template-columns:1fr 1fr}
+ .card{padding:18px}
+}
 </style>
 </head>
 <body>
 <div class="app">
-<header><h1>💰 Money Splitter</h1><p>Track group expenses and settle up.</p></header>
-<main>
-<section class="card">
-<h2>1. Participants</h2>
-<div id="participants"></div>
 
-<button class="muted" onclick="addParticipant()">＋ Add Participant</button>
-</section>
-
-<section class="card">
-<h2>2. Add Expense</h2>
-<div class="row">
-<input id="desc" placeholder="Expense description">
-<input id="amount" type="number" min="0" step="0.01" placeholder="Amount ₹">
-</div>
-<div class="row" style="margin-top:10px">
-<select id="paidBy" aria-label="Paid by"></select>
-<button class="primary" onclick="addExpense()">＋ Add Expense</button>
-</div>
-<div id="expenses" style="margin-top:14px"></div>
-</section>
-
-<section class="card">
-<h2>3. Summary</h2>
-<div class="summary" id="stats"></div>
-<div id="balances" style="margin-top:12px"></div>
-</section>
-
-<section class="card">
-<h2>4. Settle Up</h2>
-<div id="settlement"></div>
-<div class="share-actions">
- <button class="primary" onclick="shareWhatsApp()">📱 Share Settlement → WhatsApp</button>
- <button class="muted" onclick="copyShareLink()">🔗 Copy Shareable Link</button>
-</div>
-<div class="notice">The shareable link stores the project in the URL using lightweight obfuscation. No account or server storage is required.</div>
-</section>
-
-<section class="card">
-<details class="more">
- <summary>5. More</summary>
- <div class="more-body">
-  <div class="row">
-   <button class="muted" onclick="saveProject()">💾 Save Project</button>
-   <button class="muted" onclick="document.getElementById('importFile').click()">📂 Import Project</button>
-   <input id="importFile" type="file" accept=".json,application/json" style="display:none" onchange="importProject(event)">
+<header class="hero">
+ <div class="hero-inner">
+  <div class="brand">
+   <span class="logo-wrap" aria-hidden="true">
+    <svg viewBox="0 0 64 64">
+     <defs>
+      <linearGradient id="furGrad" x1="0" y1="0" x2="1" y2="1">
+       <stop offset="0" stop-color="#243a2d"/>
+       <stop offset="1" stop-color="#0a0f0c"/>
+      </linearGradient>
+     </defs>
+     <path d="M12 26 L19 8 L28 24 Z" fill="url(#furGrad)"/>
+     <path d="M52 26 L45 8 L36 24 Z" fill="url(#furGrad)"/>
+     <path d="M32 16c-13 0-21 10-21 21 0 11 9 19 21 19s21-8 21-19c0-11-8-21-21-21z" fill="url(#furGrad)"/>
+     <path d="M6 33h8M6 36h7M6 39h8" stroke="#e9e4d8" stroke-width=".8" stroke-linecap="round" opacity=".5"/>
+     <path d="M50 33h8M51 36h7M50 39h8" stroke="#e9e4d8" stroke-width=".8" stroke-linecap="round" opacity=".5"/>
+     <ellipse class="eye" cx="23.5" cy="38" rx="4.8" ry="5.8" fill="#f2b134"/>
+     <ellipse class="eye" cx="40.5" cy="38" rx="4.8" ry="5.8" fill="#f2b134"/>
+     <ellipse cx="23.5" cy="39.2" rx="1.9" ry="4.2" fill="#141110"/>
+     <ellipse cx="40.5" cy="39.2" rx="1.9" ry="4.2" fill="#141110"/>
+     <path d="M32 44.5l-3.6 3.6h7.2z" fill="#4a3430"/>
+     <path d="M32 48.1v2.2M25.8 51q6.2 3 12.4 0" stroke="#e9e4d8" stroke-width="1.3" fill="none" stroke-linecap="round" opacity=".85"/>
+    </svg>
+   </span>
+   <div class="brand-text">
+    <h1>PantherSplits</h1>
+    <p>Split group costs like the sleekest hunter in the jungle.</p>
+   </div>
   </div>
-  <p class="small" style="margin-top:10px">Save an event, tour or party as a JSON file and import it later.</p>
-  <button class="danger" onclick="resetApp()">Reset Everything</button>
+  <div class="hero-actions">
+   <button class="icon-btn-round" onclick="saveProject()" title="Save project" aria-label="Save project">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11l3 3v13H5V4z"/><path d="M8 4v5h7V4"/><path d="M8 13h8v7H8z"/></svg>
+   </button>
+   <button class="icon-btn-round" onclick="document.getElementById('importFile').click()" title="Import project" aria-label="Import project">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v10m0 0l-4-4m4 4l4-4"/><path d="M4 15v4a2 2 0 002 2h12a2 2 0 002-2v-4"/></svg>
+   </button>
+   <input id="importFile" type="file" accept=".json,application/json" style="display:none" onchange="importProject(event)">
+   <button class="icon-btn-round" onclick="resetApp()" title="Reset everything" aria-label="Reset everything">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11A8 8 0 105.5 16.5M20 11V5M20 11h-6"/></svg>
+   </button>
+  </div>
  </div>
-</details>
-</section>
+</header>
+
+<main>
+<div class="layout">
+
+ <div class="col col-main">
+  <section class="card">
+   <div class="card-head">
+    <span class="eyebrow">Step 1</span>
+    <h2>Who's splitting?</h2>
+    <p class="hint">Add everyone in the group. You can rename them anytime.</p>
+   </div>
+   <div class="p-grid" id="participants"></div>
+   <button class="btn btn-ghost" onclick="addParticipant()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+    Add participant
+   </button>
+  </section>
+
+  <section class="card">
+   <div class="card-head">
+    <span class="eyebrow">Step 2</span>
+    <h2>Add an expense</h2>
+    <p class="hint">Log every cost as you go — petrol, hotel, snacks, all of it.</p>
+   </div>
+   <div class="row">
+    <input id="desc" placeholder="Expense description" aria-label="Expense description">
+    <input id="amount" type="number" min="0" step="0.01" placeholder="Amount ₹" aria-label="Amount">
+   </div>
+   <div class="row" style="margin-top:10px">
+    <select id="paidBy" aria-label="Paid by"></select>
+    <button class="btn btn-primary" onclick="addExpense()">
+     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+     Add expense
+    </button>
+   </div>
+   <div id="expenses" style="margin-top:8px"></div>
+  </section>
+ </div>
+
+ <div class="col col-side">
+  <section class="card">
+   <div class="card-head">
+    <span class="eyebrow">Live tally</span>
+    <h2>Where things stand</h2>
+   </div>
+   <div class="stats-grid" id="stats"></div>
+   <div id="balances"></div>
+  </section>
+
+  <section class="card">
+   <div class="card-head">
+    <span class="eyebrow">Final step</span>
+    <h2>Settle up</h2>
+   </div>
+   <div id="settlement"></div>
+   <div class="share-actions">
+    <button class="btn btn-whatsapp" onclick="shareWhatsApp()">
+     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.5 15.2L2 22l4.9-1.5A10 10 0 1012 2zm0 1.8a8.2 8.2 0 018.2 8.2 8.2 8.2 0 01-8.2 8.2 8.1 8.1 0 01-4.2-1.2l-.3-.2-3 .9.9-2.9-.2-.3A8.2 8.2 0 0112 3.8zm-3 4.2c-.2 0-.5.1-.7.4-.2.3-.9.8-.9 2s.9 2.4 1 2.6c.1.1 1.8 2.8 4.4 3.8 2.1.9 2.5.7 3 .6.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.4-.3-.1-1.5-.8-1.8-.8-.2-.1-.4-.1-.6.1-.2.3-.7.8-.8 1-.1.1-.3.2-.5.1-.3-.1-1.1-.4-2.1-1.3-.8-.7-1.3-1.6-1.4-1.9-.2-.3 0-.4.1-.6l.4-.4c.1-.2.2-.3.2-.5.1-.2 0-.4 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.6-.4z"/></svg>
+     Share on WhatsApp
+    </button>
+    <button class="btn btn-outline" onclick="copyShareLink()">
+     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.5.5l2-2a5 5 0 00-7-7l-1 1"/><path d="M14 11a5 5 0 00-7.5-.5l-2 2a5 5 0 007 7l1-1"/></svg>
+     Copy link
+    </button>
+   </div>
+   <div class="notice">The shareable link stores the project in the URL using lightweight obfuscation. No account or server storage is required.</div>
+  </section>
+ </div>
+
+</div>
 </main>
+
+<footer class="site-footer">🐾 <strong>PantherSplits</strong> — split fair, split fast, no signup required.</footer>
 </div>
 
 <script>
-let data=JSON.parse(localStorage.getItem("moneySplitter")||"null")||{
+(function migrateLegacyData(){
+ // One-time migration from the old "Money Splitter" localStorage key.
+ // Runs once, then removes the legacy key so Reset Everything can't
+ // resurrect old data on the next reload.
+ if(localStorage.getItem("pantherSplits")===null){
+   let legacy=localStorage.getItem("moneySplitter");
+   if(legacy)localStorage.setItem("pantherSplits",legacy);
+ }
+ localStorage.removeItem("moneySplitter");
+})();
+
+let data=JSON.parse(localStorage.getItem("pantherSplits")||"null")||{
  participants:[{id:1,name:"Person 1"},{id:2,name:"Person 2"}],
  expenses:[]
 };
@@ -98,8 +321,9 @@ function normalizeData(){
  });
 }
 
-function save(){localStorage.setItem("moneySplitter",JSON.stringify(data))}
+function save(){localStorage.setItem("pantherSplits",JSON.stringify(data))}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function initial(name){return esc((name||"?").trim().charAt(0).toUpperCase()||"?")}
 function addParticipant(){data.participants.push({id:Date.now(),name:"Person "+(data.participants.length+1)});save();render()}
 function removeParticipant(id){
  if(data.participants.length<=1)return alert("At least one participant is required.");
@@ -117,9 +341,10 @@ function updateP(id,field,value){
 function renderParticipants(){
  let el=document.getElementById("participants");
  el.innerHTML=data.participants.map(p=>`
- <div class="participant">
-   <input value="${esc(p.name)}" onchange="updateP(${p.id},'name',this.value)">
-   <button class="danger" onclick="removeParticipant(${p.id})">×</button>
+ <div class="p-row">
+   <span class="p-avatar">${initial(p.name)}</span>
+   <input class="p-input" value="${esc(p.name)}" onchange="updateP(${p.id},'name',this.value)" aria-label="Participant name">
+   <button class="icon-btn danger-btn" onclick="removeParticipant(${p.id})" aria-label="Remove participant" title="Remove">×</button>
  </div>`).join("");
 }
 
@@ -149,19 +374,19 @@ function renderExpenses(){
  let el=document.getElementById("expenses");
 
  if(!data.expenses.length){
-   el.innerHTML='<div class="empty">No expenses added yet.</div>';
+   el.innerHTML='<div class="empty">No expenses yet — just paw prints. Add your first one above.</div>';
    return;
  }
 
  el.innerHTML=data.expenses.map(e=>{
    let p=data.participants.find(x=>Number(x.id)===Number(e.paidBy));
-   return `<div class="expense">
-     <div>
-       ${esc(e.desc)}
-       <div class="small">Paid by ${esc(p?.name||"Unknown")}</div>
+   return `<div class="e-row">
+     <div class="e-main">
+       <div class="e-desc">${esc(e.desc)}</div>
+       <div class="e-meta">Paid by <strong>${esc(p?.name||"Unknown")}</strong></div>
      </div>
-     <div class="money">₹${Number(e.amount).toFixed(2)}</div>
-     <button class="danger" onclick="removeExpense(${e.id})">×</button>
+     <div class="e-amount">₹${Number(e.amount).toFixed(2)}</div>
+     <button class="icon-btn danger-btn" onclick="removeExpense(${e.id})" aria-label="Remove expense" title="Remove">×</button>
    </div>`;
  }).join("");
 }
@@ -185,20 +410,19 @@ function calculate(){
 
  document.getElementById("stats").innerHTML=`
    <div class="stat">
-     <div class="small">Total expenses</div>
+     <div class="label">Total spent</div>
      <div class="value">₹${total.toFixed(2)}</div>
    </div>
    <div class="stat">
-     <div class="small">Equal share / person</div>
+     <div class="label">Equal share</div>
      <div class="value">₹${share.toFixed(2)}</div>
    </div>`;
 
  document.getElementById("balances").innerHTML=balances.map(b=>`
    <div class="balance">
-     <strong>${esc(b.name)}</strong>
-     — Paid ₹${b.paid.toFixed(2)}
-     <span class="${b.balance>=-.01?'good':'bad'}">
-       · ${b.balance>=-.01?'gets back':'owes'} ₹${Math.abs(b.balance).toFixed(2)}
+     <div><span class="who">${esc(b.name)}</span><span class="paid">Paid ₹${b.paid.toFixed(2)}</span></div>
+     <span class="tag ${b.balance>=-.01?'good':'bad'}">
+       ${b.balance>=-.01?'gets back':'owes'} ₹${Math.abs(b.balance).toFixed(2)}
      </span>
    </div>`).join("");
 
@@ -208,8 +432,12 @@ function calculate(){
 function settle(bs){
  let debt=bs.filter(x=>x.balance<-.01).map(x=>({...x,rem:-x.balance})),credit=bs.filter(x=>x.balance>.01).map(x=>({...x,rem:x.balance}));
  let out=[],i=0,j=0;
- while(i<debt.length&&j<credit.length){let a=Math.min(debt[i].rem,credit[j].rem);out.push(`<div class="settle"><strong>${esc(debt[i].name)}</strong> pays <strong>${esc(credit[j].name)}</strong> <strong>₹${a.toFixed(2)}</strong></div>`);debt[i].rem-=a;credit[j].rem-=a;if(debt[i].rem<.01)i++;if(credit[j].rem<.01)j++}
- document.getElementById("settlement").innerHTML=out.length?out:'<div class="empty">Everyone is settled up 🎉</div>'
+ while(i<debt.length&&j<credit.length){
+  let a=Math.min(debt[i].rem,credit[j].rem);
+  out.push(`<div class="settle-row"><div class="settle-flow"><span class="who">${esc(debt[i].name)}</span><span class="arrow">→</span><span class="who strong">${esc(credit[j].name)}</span></div><div class="settle-amt">₹${a.toFixed(2)}</div></div>`);
+  debt[i].rem-=a;credit[j].rem-=a;if(debt[i].rem<.01)i++;if(credit[j].rem<.01)j++
+ }
+ document.getElementById("settlement").innerHTML=out.length?out.join(""):'<div class="empty">Everyone is settled up 🐾</div>'
 }
 normalizeData();
 
@@ -229,7 +457,7 @@ function encodeSharedData(){
  // This is NOT encryption; it only keeps raw values from being readable in the URL.
  let json=JSON.stringify(payload),
      bytes=new TextEncoder().encode(json),
-     key=new TextEncoder().encode("MoneySplitter-v2"),
+     key=new TextEncoder().encode("PantherSplits-v2"),
      out=new Uint8Array(bytes.length);
 
  for(let i=0;i<bytes.length;i++)out[i]=bytes[i]^key[i%key.length];
@@ -246,7 +474,7 @@ function decodeSharedData(encoded){
 
  let binary=atob(base64),
      bytes=new Uint8Array(binary.length),
-     key=new TextEncoder().encode("MoneySplitter-v2");
+     key=new TextEncoder().encode("PantherSplits-v2");
 
  for(let i=0;i<binary.length;i++)
    bytes[i]=binary.charCodeAt(i)^key[i%key.length];
@@ -312,7 +540,7 @@ function getSettlementText(){
  });
 
  let lines=[];
- lines.push("💰 Money Splitter — Settlement");
+ lines.push("🐆 PantherSplits — Settlement");
  lines.push("");
  lines.push(`Total expenses: ₹${total.toFixed(2)}`);
  lines.push(`People: ${data.participants.length}`);
@@ -347,7 +575,7 @@ function getSettlementText(){
    lines.push("Everyone is settled up 🎉");
 
  lines.push("");
- lines.push("Open Money Splitter:");
+ lines.push("Open PantherSplits:");
  lines.push(getWebsiteUrl());
 
  return lines.join("\n");
@@ -407,7 +635,7 @@ function loadSharedProject(){
 
 function saveProject(){
  let project={
-  app:"Money Splitter",
+  app:"PantherSplits",
   version:1,
   exportedAt:new Date().toISOString(),
   participants:data.participants,
@@ -417,7 +645,7 @@ function saveProject(){
  let url=URL.createObjectURL(blob);
  let a=document.createElement("a");
  a.href=url;
- a.download="money-splitter-"+new Date().toISOString().slice(0,10)+".json";
+ a.download="panther-splits-"+new Date().toISOString().slice(0,10)+".json";
  document.body.appendChild(a);
  a.click();
  a.remove();
@@ -435,13 +663,13 @@ function importProject(event){
    let imported=JSON.parse(reader.result);
 
    if(!imported || !Array.isArray(imported.participants) || !Array.isArray(imported.expenses))
-    throw new Error("Invalid Money Splitter project file.");
+    throw new Error("Invalid PantherSplits project file.");
 
    if(imported.participants.length===0)
     throw new Error("Project must contain at least one participant.");
 
    let ids=new Set(imported.participants.map(p=>p.id));
-imported.participants.forEach(p=>{
+   imported.participants.forEach(p=>{
     if(p.id===undefined || typeof p.name!=="string")
      throw new Error("Invalid participant data.");
     delete p.upfront;
@@ -450,9 +678,11 @@ imported.participants.forEach(p=>{
    imported.expenses.forEach(e=>{
     if(e.id===undefined || typeof e.desc!=="string" || Number(e.amount)<=0)
      throw new Error("Invalid expense data.");
+    if(e.paidBy===undefined || !ids.has(e.paidBy))
+     throw new Error("Invalid expense payer.");
     e.amount=Number(e.amount);
-    e.paidFrom="pool";
-    delete e.paidBy;
+    e.paidBy=Number(e.paidBy);
+    delete e.paidFrom;
    });
 
    if(!confirm("Import this project? Current data will be replaced."))
@@ -478,7 +708,7 @@ imported.participants.forEach(p=>{
  reader.readAsText(file);
 }
 
-function resetApp(){if(confirm("Reset all participants and expenses?")){localStorage.removeItem("moneySplitter");history.replaceState(null,"",location.pathname+location.search);location.reload()}}
+function resetApp(){if(confirm("Reset all participants and expenses?")){localStorage.removeItem("pantherSplits");localStorage.removeItem("moneySplitter");history.replaceState(null,"",location.pathname+location.search);location.reload()}}
 function render(){
  renderParticipants();
 
