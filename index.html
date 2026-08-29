@@ -287,8 +287,8 @@ footer.site-footer strong{color:var(--jungle-800)}
     <p class="hint">Log every cost as you go — petrol, hotel, snacks, all of it.</p>
    </div>
    <div class="row">
-    <span class="field"><input id="desc" placeholder="Expense description" aria-label="Expense description"></span>
-    <span class="field"><input id="amount" type="number" min="0" step="0.01" placeholder="Amount ₹" aria-label="Amount"></span>
+    <span class="field"><input id="desc" placeholder="Expense description" maxlength="60" aria-label="Expense description"></span>
+    <span class="field"><input id="amount" type="number" min="0.01" max="10000000" step="0.01" placeholder="Amount ₹" onkeydown="blockBadNumberKeys(event)" oninput="clampAmountInput(this)" aria-label="Amount"></span>
    </div>
    <div class="row" style="margin-top:10px">
     <span class="field"><select id="paidBy" aria-label="Paid by"></select></span>
@@ -375,10 +375,52 @@ function removeParticipant(id){
  if(data.expenses.some(e=>e.paidBy===id))return alert("This person has expenses. Delete/reassign those expenses first.");
  data.participants=data.participants.filter(p=>p.id!==id);save();render()
 }
+const MAX_AMOUNT=10000000; // ₹1,00,00,000 per expense — generous ceiling, blocks runaway input
+const MAX_DESC_LEN=60;
+const MAX_NAME_LEN=40;
+
+function blockBadNumberKeys(ev){
+ // Prevent typing characters that create scientific notation or negatives in amount fields.
+ if(["e","E","+","-"].includes(ev.key))ev.preventDefault();
+}
+
+function clampAmountInput(el){
+ // Behaves like maxlength: a keystroke that would push the value past the
+ // cap is simply rejected and the field reverts to its last valid content —
+ // never snaps to a random round number.
+ let prev=el.dataset.prevValid||"";
+
+ if(el.value===""){el.dataset.prevValid="";return}
+
+ let num=Number(el.value);
+ if(!isFinite(num)||num>MAX_AMOUNT){
+   let pos=Math.max(0,(el.selectionStart||prev.length)-1);
+   el.value=prev;
+   try{el.setSelectionRange(pos,pos)}catch(e){}
+   return;
+ }
+
+ el.dataset.prevValid=el.value;
+}
+
+function fmt(n){
+ // Indian-style comma grouping for on-screen amounts, e.g. 1,00,000.00
+ return Number(n).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+
+function validateAmount(raw){
+ let amount=Number(raw);
+ if(!isFinite(amount)||amount<=0)
+   return {ok:false,error:"Enter a valid amount greater than ₹0."};
+ if(amount>MAX_AMOUNT)
+   return {ok:false,error:`That amount looks too large. Please keep it under ₹${MAX_AMOUNT.toLocaleString("en-IN")}.`};
+ return {ok:true,amount:Math.round(amount*100)/100};
+}
+
 function updateP(id,field,value){
  let p=data.participants.find(x=>x.id===id);
  if(!p)return;
- p[field]=value;
+ p[field]=String(value).trim().slice(0,MAX_NAME_LEN);
  save();
  render();
 }
@@ -388,28 +430,31 @@ function renderParticipants(){
  el.innerHTML=data.participants.map(p=>`
  <div class="p-row">
    <span class="p-avatar">${initial(p.name)}</span>
-   <input class="p-input" value="${esc(p.name)}" onchange="updateP(${p.id},'name',this.value)" aria-label="Participant name">
+   <input class="p-input" value="${esc(p.name)}" maxlength="${MAX_NAME_LEN}" onchange="updateP(${p.id},'name',this.value)" aria-label="Participant name">
    <button class="icon-btn danger-btn" onclick="removeParticipant(${p.id})" aria-label="Remove participant" title="Remove">×</button>
  </div>`).join("");
 }
 
 function addExpense(){
- let desc=document.getElementById("desc").value.trim(),
-     amount=Number(document.getElementById("amount").value),
+ let desc=document.getElementById("desc").value.trim().slice(0,MAX_DESC_LEN),
+     check=validateAmount(document.getElementById("amount").value),
      paidBy=Number(document.getElementById("paidBy").value);
 
- if(!desc||amount<=0)return alert("Enter a description and valid amount.");
+ if(!desc)return alert("Enter a description for this expense.");
+ if(!check.ok)return alert(check.error);
  if(!paidBy)return alert("Select who paid this expense.");
 
  data.expenses.push({
    id:Date.now(),
    desc,
-   amount,
+   amount:check.amount,
    paidBy
  });
 
  document.getElementById("desc").value="";
- document.getElementById("amount").value="";
+ let amountEl=document.getElementById("amount");
+ amountEl.value="";
+ amountEl.dataset.prevValid="";
  save();
  render();
 }
@@ -423,16 +468,17 @@ function handleEditKey(ev,id){
  else if(ev.key==="Escape"){ev.preventDefault();cancelEditExpense()}
 }
 function saveEditExpense(id){
- let desc=document.getElementById("edit-desc-"+id).value.trim(),
-     amount=Number(document.getElementById("edit-amount-"+id).value),
+ let desc=document.getElementById("edit-desc-"+id).value.trim().slice(0,MAX_DESC_LEN),
+     check=validateAmount(document.getElementById("edit-amount-"+id).value),
      paidBy=Number(document.getElementById("edit-paidby-"+id).value);
 
- if(!desc||amount<=0)return alert("Enter a description and valid amount.");
+ if(!desc)return alert("Enter a description for this expense.");
+ if(!check.ok)return alert(check.error);
  if(!paidBy)return alert("Select who paid this expense.");
 
  let exp=data.expenses.find(x=>x.id===id);
  if(!exp)return;
- exp.desc=desc;exp.amount=amount;exp.paidBy=paidBy;
+ exp.desc=desc;exp.amount=check.amount;exp.paidBy=paidBy;
 
  editingExpenseId=null;
  save();
@@ -450,8 +496,8 @@ function renderExpenses(){
  el.innerHTML=data.expenses.map(e=>{
    if(editingExpenseId===e.id){
      return `<div class="e-row-edit">
-       <span class="field e-edit-desc"><input id="edit-desc-${e.id}" value="${esc(e.desc)}" onkeydown="handleEditKey(event,${e.id})" aria-label="Edit description"></span>
-       <span class="field e-edit-amount"><input id="edit-amount-${e.id}" type="number" min="0" step="0.01" value="${Number(e.amount)}" onkeydown="handleEditKey(event,${e.id})" aria-label="Edit amount"></span>
+       <span class="field e-edit-desc"><input id="edit-desc-${e.id}" value="${esc(e.desc)}" maxlength="60" onkeydown="handleEditKey(event,${e.id})" aria-label="Edit description"></span>
+       <span class="field e-edit-amount"><input id="edit-amount-${e.id}" type="number" min="0.01" max="10000000" step="0.01" value="${Number(e.amount)}" data-prev-valid="${Number(e.amount)}" onkeydown="blockBadNumberKeys(event);handleEditKey(event,${e.id})" oninput="clampAmountInput(this)" aria-label="Edit amount"></span>
        <span class="field e-edit-paidby"><select id="edit-paidby-${e.id}" aria-label="Edit paid by">${data.participants.map(p=>`<option value="${p.id}"${Number(p.id)===Number(e.paidBy)?" selected":""}>${esc(p.name)}</option>`).join("")}</select></span>
        <div class="e-edit-actions">
          <button class="icon-btn save-btn" onclick="saveEditExpense(${e.id})" aria-label="Save changes" title="Save">${checkSvg}</button>
@@ -466,7 +512,7 @@ function renderExpenses(){
        <div class="e-desc">${esc(e.desc)}</div>
        <div class="e-meta">Paid by <strong>${esc(p?.name||"Unknown")}</strong></div>
      </div>
-     <div class="e-amount">₹${Number(e.amount).toFixed(2)}</div>
+     <div class="e-amount">₹${fmt(e.amount)}</div>
      <button class="icon-btn edit-btn" onclick="startEditExpense(${e.id})" aria-label="Edit expense" title="Edit">${pencilSvg}</button>
      <button class="icon-btn danger-btn" onclick="removeExpense(${e.id})" aria-label="Remove expense" title="Remove">×</button>
    </div>`;
@@ -498,18 +544,18 @@ function calculate(){
  document.getElementById("stats").innerHTML=`
    <div class="stat">
      <div class="label">Total spent</div>
-     <div class="value">₹${total.toFixed(2)}</div>
+     <div class="value">₹${fmt(total)}</div>
    </div>
    <div class="stat">
      <div class="label">Equal share</div>
-     <div class="value">₹${share.toFixed(2)}</div>
+     <div class="value">₹${fmt(share)}</div>
    </div>`;
 
  document.getElementById("balances").innerHTML=balances.map(b=>`
    <div class="balance">
-     <div><span class="who">${esc(b.name)}</span><span class="paid">Paid ₹${b.paid.toFixed(2)}</span></div>
+     <div><span class="who">${esc(b.name)}</span><span class="paid">Paid ₹${fmt(b.paid)}</span></div>
      <span class="tag ${b.balance>=-.01?'good':'bad'}">
-       ${b.balance>=-.01?'gets back':'owes'} ₹${Math.abs(b.balance).toFixed(2)}
+       ${b.balance>=-.01?'gets back':'owes'} ₹${fmt(Math.abs(b.balance))}
      </span>
    </div>`).join("");
 
@@ -521,7 +567,7 @@ function settle(bs){
  let out=[],i=0,j=0;
  while(i<debt.length&&j<credit.length){
   let a=Math.min(debt[i].rem,credit[j].rem);
-  out.push(`<div class="settle-row"><div class="settle-flow"><span class="who">${esc(debt[i].name)}</span><span class="arrow">→</span><span class="who strong">${esc(credit[j].name)}</span></div><div class="settle-amt">₹${a.toFixed(2)}</div></div>`);
+  out.push(`<div class="settle-row"><div class="settle-flow"><span class="who">${esc(debt[i].name)}</span><span class="arrow">→</span><span class="who strong">${esc(credit[j].name)}</span></div><div class="settle-amt">₹${fmt(a)}</div></div>`);
   debt[i].rem-=a;credit[j].rem-=a;if(debt[i].rem<.01)i++;if(credit[j].rem<.01)j++
  }
  document.getElementById("settlement").innerHTML=out.length?out.join(""):'<div class="empty">Everyone is settled up 🐾</div>'
@@ -629,16 +675,16 @@ function getSettlementText(){
  let lines=[];
  lines.push("🐆 PantherSplits — Settlement");
  lines.push("");
- lines.push(`Total expenses: ₹${total.toFixed(2)}`);
+ lines.push(`Total expenses: ₹${fmt(total)}`);
  lines.push(`People: ${data.participants.length}`);
- lines.push(`Equal share: ₹${share.toFixed(2)}`);
+ lines.push(`Equal share: ₹${fmt(share)}`);
  lines.push("");
 
  lines.push("📋 All expenses");
  lines.push("");
  data.expenses.forEach(e=>{
    let p=data.participants.find(x=>Number(x.id)===Number(e.paidBy));
-   lines.push(`• ${e.desc} — ₹${Number(e.amount).toFixed(2)} — paid by ${p?.name||"Unknown"}`);
+   lines.push(`• ${e.desc} — ₹${fmt(e.amount)} — paid by ${p?.name||"Unknown"}`);
  });
  lines.push("");
 
@@ -651,7 +697,7 @@ function getSettlementText(){
  let i=0,j=0;
  while(i<debt.length&&j<credit.length){
    let amount=Math.min(debt[i].rem,credit[j].rem);
-   lines.push(`${debt[i].name} → ${credit[j].name}: ₹${amount.toFixed(2)}`);
+   lines.push(`${debt[i].name} → ${credit[j].name}: ₹${fmt(amount)}`);
    debt[i].rem-=amount;
    credit[j].rem-=amount;
    if(debt[i].rem<.01)i++;
