@@ -4,13 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#132018">
-<meta name="description" content="PantherSplits — a free group expense calculator. Track who paid what, split it fairly, and settle up in seconds. No signup, no server storage.">
+<meta name="description" content="PantherSplits — a free group expense calculator. Split shared costs or run a common pot, settle up in seconds. No signup, no server storage.">
 <title>PantherSplits — Free Group Expense Splitter</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23101a14'/%3E%3Cpath d='M12 26 L19 10 L27 24 Z' fill='%23080c09'/%3E%3Cpath d='M52 26 L45 10 L37 24 Z' fill='%23080c09'/%3E%3Cpath d='M32 18c-12 0-20 9-20 20 0 10 9 18 20 18s20-8 20-18c0-11-8-20-20-20z' fill='%23080c09'/%3E%3Cellipse cx='23.5' cy='37' rx='4.6' ry='5.6' fill='%23f2b134'/%3E%3Cellipse cx='40.5' cy='37' rx='4.6' ry='5.6' fill='%23f2b134'/%3E%3Cellipse cx='23.5' cy='38.2' rx='1.8' ry='4' fill='%23111111'/%3E%3Cellipse cx='40.5' cy='38.2' rx='1.8' ry='4' fill='%23111111'/%3E%3Cpath d='M32 43l-3.4 3.4h6.8z' fill='%233c2b28'/%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23101a14'/%3E%3Cpath d='M12 26 L19 10 L27 24 Z' fill='%23080c09'/%3E%3Cpath d='M52 26 L45 10 L37 24 Z' fill='%23080c09'/%3E%3Cpath d='M32 18c-12 0-20 9-20 20 0 10 9 18 20 18s20-8 20-18c0-11-8-20-20-20z' fill='%23080c09'/%3E%3Cellipse cx='23.5' cy='37' rx='4.6' ry='5.6' fill='%23f2b134'/%3E%3Cellipse cx='40.5' cy='37' rx='4.6' ry='5.6' fill='%23f2b134'/%3E%3Cellipse cx='23.5' cy='38.2' rx='1.8' ry='4' fill='%23111111'/%3E%3Cellipse cx='40.5' cy='38.2' rx='1.8' ry='4' fill='%23111111'/%3E%3Cpath d='M32 43l-3.4 3.4h6.8z' fill='%233c2b28'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23101a14'/%3E%3Cpath d='M15 24 L16 7 L29 18 Z' fill='%23080c09'/%3E%3Cpath d='M49 24 L48 7 L35 18 Z' fill='%23080c09'/%3E%3Cpath d='M32 13 C19 13 13 23 14 33 C15 44 23 53 32 54 C41 53 49 44 50 33 C51 23 45 13 32 13 Z' fill='%23080c09'/%3E%3Cpath d='M14 32 L4 29 L12 36 L4 39 L13 42 Z' fill='%23080c09'/%3E%3Cpath d='M50 32 L60 29 L52 36 L60 39 L51 42 Z' fill='%23080c09'/%3E%3Cpath d='M20 34 q5 -5 10 0 q-5 4 -10 0 Z' fill='%23f2b134'/%3E%3Cpath d='M44 34 q-5 -5 -10 0 q5 4 10 0 Z' fill='%23f2b134'/%3E%3Cellipse cx='24.5' cy='34.6' rx='1.5' ry='2.8' fill='%23111'/%3E%3Cellipse cx='39.5' cy='34.6' rx='1.5' ry='2.8' fill='%23111'/%3E%3Cpath d='M32 40 l-3 3.2 h6 Z' fill='%233c2b28'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,700;9..144,900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
  --panther:#0e1412;
@@ -31,28 +30,32 @@
  --bad:#bf4a2c;
  --danger-bg:#fbe3da;
  --danger-ink:#a8451f;
- --radius:16px;
- --shadow:0 12px 28px -14px rgba(16,29,21,.28);
+ --radius:14px;
+ --shadow:0 12px 28px -16px rgba(16,29,21,.30);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--cream);color:var(--ink);font-family:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
 h1,h2{font-family:'Fraunces',Georgia,serif;margin:0}
-.app{max-width:1180px;margin:0 auto}
+.app{max-width:1200px;margin:0 auto}
 
-/* header */
+/* mode-scoped visibility */
+body[data-mode="split"] .only-pool{display:none}
+body[data-mode="pool"] .only-split{display:none}
+
+/* ---------- header ---------- */
 header.hero{
  background:
-  radial-gradient(560px 280px at 12% -25%, rgba(242,177,52,.22), transparent 60%),
-  radial-gradient(700px 380px at 105% 130%, rgba(95,174,122,.18), transparent 60%),
-  linear-gradient(160deg,var(--jungle-900),var(--panther) 78%);
+  radial-gradient(560px 260px at 10% -30%, rgba(242,177,52,.22), transparent 60%),
+  radial-gradient(640px 340px at 105% 140%, rgba(95,174,122,.18), transparent 60%),
+  linear-gradient(160deg,var(--jungle-900),var(--panther) 80%);
  border-bottom:3px solid var(--amber-deep);
- padding:22px clamp(16px,3vw,32px);
+ padding:14px clamp(16px,3vw,28px);
 }
-.hero-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:14px}
+.hero-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
 .logo-wrap{
- width:56px;height:56px;flex:none;padding:8px;border-radius:50%;
+ width:46px;height:46px;flex:none;padding:7px;border-radius:50%;
  background:radial-gradient(circle at 30% 25%, rgba(242,177,52,.35), rgba(242,177,52,0) 62%), rgba(255,255,255,.06);
  border:2px solid rgba(242,177,52,.55);display:flex;align-items:center;justify-content:center;
 }
@@ -60,41 +63,42 @@ header.hero{
 @keyframes eyeglow{0%,100%{filter:drop-shadow(0 0 0 rgba(242,177,52,.5))}50%{filter:drop-shadow(0 0 5px rgba(242,177,52,.95))}}
 .logo-wrap .eye{animation:eyeglow 4.5s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){.logo-wrap .eye{animation:none}}
-.brand-text h1{color:var(--cream);font-size:clamp(22px,3vw,28px);font-weight:700;letter-spacing:.2px}
-.brand-text p{margin:4px 0 0;color:var(--amber-soft);font-size:13.5px;font-weight:500;opacity:.95}
-.hero-actions{display:flex;gap:10px}
+.brand-text h1{color:var(--cream);font-size:clamp(20px,2.6vw,25px);font-weight:700;letter-spacing:.2px}
+.brand-text p{margin:2px 0 0;color:var(--amber-soft);font-size:12.5px;font-weight:500;opacity:.95}
+.hero-actions{display:flex;gap:8px}
 .icon-btn-round{
- width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.08);
+ width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);
  border:1px solid rgba(255,255,255,.2);color:var(--cream);display:flex;align-items:center;justify-content:center;
  cursor:pointer;transition:background .15s ease,color .15s ease,transform .15s ease;
 }
-.icon-btn-round svg{width:17px;height:17px}
+.icon-btn-round svg{width:16px;height:16px}
 .icon-btn-round:hover{background:var(--amber);color:var(--jungle-900);border-color:var(--amber);transform:translateY(-1px)}
 .icon-btn-round:active{transform:translateY(0)}
 
-/* layout */
-main{padding:clamp(16px,3vw,28px)}
-.layout{display:grid;grid-template-columns:1.35fr 1fr;gap:20px;align-items:start}
-.col{display:flex;flex-direction:column;gap:20px}
-.col-side{position:sticky;top:18px}
-@media (max-width:960px){
+/* ---------- mode toggle ---------- */
+.mode-bar{display:flex;justify-content:center;padding:16px 16px 0}
+.seg{display:inline-flex;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px;box-shadow:var(--shadow)}
+.seg button{border:0;background:transparent;padding:9px 20px;border-radius:999px;font-weight:700;font-size:13.5px;color:var(--muted);cursor:pointer;font-family:'Manrope',sans-serif;display:inline-flex;align-items:center;gap:7px;transition:background .15s,color .15s}
+.seg button svg{width:16px;height:16px}
+.seg button.active{background:linear-gradient(135deg,var(--amber-soft),var(--amber-deep));color:var(--jungle-900)}
+
+/* ---------- layout ---------- */
+main{padding:clamp(14px,2.4vw,22px)}
+.layout{display:grid;grid-template-columns:1.32fr 1fr;gap:18px;align-items:start}
+.col{display:flex;flex-direction:column;gap:16px}
+.col-side{position:sticky;top:14px}
+@media (max-width:980px){
  .layout{grid-template-columns:1fr}
  .col-side{position:static}
 }
 
-.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:22px 22px 24px;box-shadow:var(--shadow)}
-.card-head{margin-bottom:16px}
-.eyebrow{display:block;font-size:11px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--amber-deep);margin-bottom:4px}
-.card-head h2{font-size:20px;font-weight:700;color:var(--ink)}
-.card-head p.hint{margin:5px 0 0;font-size:13px;color:var(--muted)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.card-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.step-badge{font-size:11px;font-weight:800;letter-spacing:.04em;color:var(--jungle-900);background:var(--amber-soft);border-radius:999px;padding:2px 9px;flex:none}
+.card-head h2{font-size:18px;font-weight:700;color:var(--ink)}
+.card-head .hint{width:100%;margin:0;font-size:12.5px;color:var(--muted)}
 
-/* form basics */
-.row{display:flex;gap:10px}
-.row>*{flex:1}
-label.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-
-/* gradient-border field wrapper: a subtle neutral ring at rest,
-   a jungle-to-amber gradient ring that fades in smoothly on focus. */
+/* ---------- fields ---------- */
 .field{position:relative;display:block;border-radius:10px}
 .field::before,.field::after{
  content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;
@@ -107,21 +111,23 @@ label.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 
 .field:focus-within::after{opacity:1}
 
 input[type=text],input[type=number],input:not([type]),select{
- width:100%;padding:9px 11px;border:none;border-radius:10px;
- font-size:13.5px;background:var(--paper);color:var(--ink);font-family:'Manrope',sans-serif;
- transition:background .18s ease;
+ width:100%;padding:10px 12px;border:none;border-radius:10px;
+ font-size:14px;background:var(--paper);color:var(--ink);font-family:'Manrope',sans-serif;
 }
+input::placeholder{color:#a9b0a2;font-weight:500}
 input:focus,select:focus{outline:none}
 select{appearance:none;-webkit-appearance:none;padding-right:30px;cursor:pointer;
  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23767f70' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 8l5 5 5-5'/%3E%3C/svg%3E");
  background-repeat:no-repeat;background-position:right 9px center;background-size:15px}
+.mt10{margin-top:10px}
 
-/* buttons */
-.btn{border:0;border-radius:10px;padding:10px 16px;font-weight:700;font-family:'Manrope',sans-serif;
+/* ---------- buttons ---------- */
+.btn{border:0;border-radius:10px;padding:10px 15px;font-weight:700;font-family:'Manrope',sans-serif;
  cursor:pointer;font-size:13.5px;display:inline-flex;align-items:center;gap:7px;justify-content:center;
  transition:transform .12s ease,box-shadow .12s ease,background .12s ease;white-space:nowrap}
 .btn:active{transform:translateY(1px)}
 .btn svg{width:15px;height:15px;flex:none}
+.btn-sm{padding:7px 11px;font-size:12.5px}
 .btn-primary{background:linear-gradient(135deg,var(--amber-soft),var(--amber-deep));color:var(--jungle-900);box-shadow:0 8px 18px -8px rgba(201,141,30,.6)}
 .btn-primary:hover{box-shadow:0 10px 22px -8px rgba(201,141,30,.75)}
 .btn-ghost{background:var(--jungle-800);color:var(--cream)}
@@ -130,11 +136,20 @@ select{appearance:none;-webkit-appearance:none;padding-right:30px;cursor:pointer
 .btn-outline:hover{background:var(--jungle-900);color:var(--cream);border-color:var(--jungle-900)}
 .btn-whatsapp{background:#25D366;color:#0b3b21}
 .btn-whatsapp:hover{background:#20bd5a}
-.btn-block{width:100%}
 
-/* participants */
-.p-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:9px;margin-bottom:14px}
-.p-row{position:relative;display:flex;align-items:center;gap:7px;background:var(--cream);border-radius:11px;padding:5px 7px 5px 5px}
+/* ---------- pool controls ---------- */
+.pool-controls{margin-bottom:12px}
+.pool-default{display:flex;align-items:center;gap:9px;flex-wrap:wrap;background:var(--cream);border:1px solid var(--line);border-radius:11px;padding:9px 11px}
+.pd-label{font-weight:700;font-size:13px;color:var(--jungle-800)}
+.rs-field{display:inline-flex;align-items:center;gap:2px;background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:3px 9px}
+.rs-field i{font-style:normal;color:var(--muted);font-size:13px}
+.rs-field input{width:74px;border:0;background:transparent;padding:5px 0;font-size:14px;font-weight:700}
+
+/* ---------- participants ---------- */
+.p-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+body[data-mode="pool"] .p-grid{grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+.pot-row .p-input{min-width:70px}
+.p-row{position:relative;display:flex;align-items:center;gap:7px;background:var(--cream);border-radius:11px;padding:4px 6px 4px 4px}
 .p-row::before,.p-row::after{
  content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;
  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
@@ -144,79 +159,108 @@ select{appearance:none;-webkit-appearance:none;padding-right:30px;cursor:pointer
 .p-row::after{background:linear-gradient(120deg,var(--leaf),var(--amber-soft) 55%,var(--amber-deep));opacity:0;transition:opacity .22s ease}
 .p-row:focus-within::before{opacity:0}
 .p-row:focus-within::after{opacity:1}
+.p-row.is-collector::before{opacity:0}
+.p-row.is-collector::after{opacity:1;background:linear-gradient(120deg,var(--amber-soft),var(--amber-deep))}
 .p-avatar{width:26px;height:26px;border-radius:50%;background:var(--jungle-800);color:var(--amber-soft);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex:none;font-family:'Fraunces',serif}
-.p-input{border:none;background:transparent;flex:1;min-width:0;padding:5px 2px;font-size:13.5px;color:var(--ink)}
+.p-input{border:none;background:transparent;flex:1;min-width:0;padding:6px 2px;font-size:14px;color:var(--ink)}
 .p-input:focus{outline:none;box-shadow:none;border:none}
+.star{width:24px;height:24px;border:0;background:transparent;color:#c9c2ab;cursor:pointer;font-size:16px;flex:none;line-height:1;padding:0}
+.star:hover{color:var(--amber-deep)}
+.p-row.is-collector .star{color:var(--amber-deep)}
+.contrib{display:inline-flex;align-items:center;gap:1px;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:1px 7px;flex:none}
+.contrib i{font-style:normal;color:var(--muted);font-size:12px}
+.c-input{width:60px;border:0;background:transparent;font-size:13.5px;text-align:right;padding:4px 0;color:var(--ink);font-weight:700}
+.c-input:focus{outline:none}
 
-/* small round delete buttons */
-.icon-btn{width:26px;height:26px;border-radius:50%;border:0;flex:none;cursor:pointer;font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center;font-weight:700;transition:background .12s,color .12s}
+.icon-btn{width:24px;height:24px;border-radius:50%;border:0;flex:none;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;font-weight:700;transition:background .12s,color .12s}
+.icon-btn svg{width:12.5px;height:12.5px}
 .danger-btn{background:var(--danger-bg);color:var(--danger-ink)}
 .danger-btn:hover{background:var(--danger-ink);color:#fff}
 
-/* expenses */
-.e-row{display:flex;align-items:center;gap:12px;padding:12px 2px;border-bottom:1px solid var(--line)}
+/* ---------- share chips ---------- */
+.chips-label{display:block;font-size:11.5px;font-weight:700;color:var(--muted);margin:10px 0 6px}
+.all-toggle{border:0;background:var(--cream);color:var(--jungle-700);font-weight:700;border-radius:999px;padding:2px 9px;font-size:11px;cursor:pointer;margin-left:6px}
+.all-toggle:hover{background:var(--jungle-700);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:5px;border:1.5px solid var(--line);background:var(--paper);border-radius:999px;padding:3px 10px 3px 4px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:background .12s,color .12s,border-color .12s}
+.chip .dot{width:18px;height:18px;border-radius:50%;background:#cfd4c8;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800}
+.chip.on{border-color:var(--jungle-600);color:var(--jungle-800);background:#eef3ee}
+.chip.on .dot{background:var(--jungle-700);color:var(--amber-soft)}
+.share-pick{margin-top:2px}
+
+/* ---------- expenses ---------- */
+.e-row{display:flex;align-items:center;gap:10px;padding:10px 2px;border-bottom:1px solid var(--line)}
 .e-row:last-child{border-bottom:none}
 .e-main{flex:1;min-width:0}
-.e-desc{font-weight:700;color:var(--ink);font-size:15px}
-.e-meta{font-size:12.5px;color:var(--muted);margin-top:2px}
+.e-desc{font-weight:700;color:var(--ink);font-size:14.5px}
+.e-meta{font-size:12px;color:var(--muted);margin-top:1px}
 .e-meta strong{color:var(--jungle-800)}
-.e-amount{font-weight:800;color:var(--jungle-800);font-size:15px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.e-amount{font-weight:800;color:var(--jungle-800);font-size:14.5px;white-space:nowrap;font-variant-numeric:tabular-nums}
 .edit-btn{background:#eaf0ec;color:var(--jungle-700)}
 .edit-btn:hover{background:var(--jungle-700);color:#fff}
-.icon-btn svg{width:12.5px;height:12.5px}
 
-/* inline expense edit row */
-.e-row-edit{display:flex;flex-wrap:wrap;gap:8px;padding:11px 2px;border-bottom:1px solid var(--line);align-items:center}
+.e-row-edit{display:flex;flex-wrap:wrap;gap:7px;padding:9px 2px;border-bottom:1px solid var(--line);align-items:center}
 .e-row-edit:last-child{border-bottom:none}
-.e-edit-desc{flex:2 1 140px}
+.e-edit-desc{flex:2 1 130px}
 .e-edit-amount{flex:1 1 90px}
 .e-edit-paidby{flex:1 1 110px}
 .e-edit-actions{display:flex;gap:6px;flex:none;margin-left:auto}
+.edit-chips-wrap{flex:1 1 100%}
+.edit-chips-wrap .chips-label{margin:4px 0 6px}
 .save-btn{background:#e4f4e9;color:var(--good)}
 .save-btn:hover{background:var(--good);color:#fff}
 .cancel-btn{background:var(--line);color:var(--muted)}
 .cancel-btn:hover{background:var(--muted);color:#fff}
 
-.empty{text-align:center;color:var(--muted);padding:26px 10px;font-style:italic;font-size:14px}
+.empty{text-align:center;color:var(--muted);padding:18px 10px;font-style:italic;font-size:13.5px}
+.expenses-scroll{max-height:230px;overflow-y:auto;margin-top:4px}
+.expenses-scroll::-webkit-scrollbar{width:7px}
+.expenses-scroll::-webkit-scrollbar-thumb{background:var(--line);border-radius:6px}
 
-/* summary */
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
-.stat{background:var(--jungle-900);border-radius:12px;padding:14px 16px}
-.stat .label{font-size:10.8px;text-transform:uppercase;letter-spacing:.08em;color:var(--amber-soft);font-weight:800}
-.stat .value{font-family:'Manrope',sans-serif;font-size:22px;font-weight:800;margin-top:5px;color:var(--cream);font-variant-numeric:tabular-nums;letter-spacing:-.2px}
+/* ---------- summary ---------- */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.stat{background:var(--jungle-900);border-radius:12px;padding:12px 14px}
+.stat .label{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--amber-soft);font-weight:800}
+.stat .value{font-family:'Manrope',sans-serif;font-size:20px;font-weight:800;margin-top:4px;color:var(--cream);font-variant-numeric:tabular-nums;letter-spacing:-.2px}
+.pot-status{padding:10px 13px;border-radius:11px;font-weight:800;font-size:14px;text-align:center;margin-bottom:12px}
+.pot-status.good{background:#e4f4e9;color:var(--good)}
+.pot-status.bad{background:var(--danger-bg);color:var(--bad)}
 
-.balance{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 13px;border-radius:10px;background:var(--cream);border:1px solid var(--line);margin-bottom:8px}
+.balances-scroll{max-height:150px;overflow-y:auto}
+.balance{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;border-radius:10px;background:var(--cream);border:1px solid var(--line);margin-bottom:6px}
 .balance:last-child{margin-bottom:0}
-.balance .who{font-weight:700;font-size:14px}
-.balance .paid{color:var(--muted);font-weight:500;font-size:12.5px;margin-left:4px}
-.tag{font-weight:800;font-size:12.5px;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.balance .who{font-weight:700;font-size:13.5px}
+.balance .paid{color:var(--muted);font-weight:500;font-size:12px;margin-left:4px}
+.mini-badge{font-size:9.5px;font-weight:800;color:var(--amber-deep);background:#fbeccb;border-radius:999px;padding:2px 7px;margin-left:6px;text-transform:uppercase;letter-spacing:.03em}
+.tag{font-weight:800;font-size:12px;padding:3px 9px;border-radius:999px;white-space:nowrap}
 .tag.good{color:var(--good);background:#e4f4e9}
 .tag.bad{color:var(--bad);background:var(--danger-bg)}
 
-/* settle */
-.settle-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;background:var(--cream);border:1px solid var(--line);border-left:4px solid var(--amber-deep);border-radius:10px;margin-bottom:9px}
+/* ---------- settle ---------- */
+.settle-scroll{max-height:150px;overflow-y:auto}
+.settle-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 13px;background:var(--cream);border:1px solid var(--line);border-left:4px solid var(--amber-deep);border-radius:10px;margin-bottom:8px}
 .settle-row:last-child{margin-bottom:0}
-.settle-flow{display:flex;align-items:center;gap:8px;font-size:14px;flex-wrap:wrap}
+.settle-flow{display:flex;align-items:center;gap:8px;font-size:13.5px;flex-wrap:wrap}
 .settle-flow .who{font-weight:700;color:var(--ink)}
 .settle-flow .who.strong{color:var(--jungle-800)}
 .arrow{color:var(--amber-deep);font-weight:800}
 .settle-amt{font-weight:800;color:var(--jungle-800);font-variant-numeric:tabular-nums;white-space:nowrap}
-.share-actions{display:flex;gap:10px;margin-top:14px}
+.share-actions{display:flex;gap:10px;margin-top:12px}
 .share-actions .btn{flex:1}
-.notice{background:var(--cream);border:1px dashed var(--line);padding:10px 12px;border-radius:10px;font-size:12px;color:var(--muted);margin-top:12px;line-height:1.55}
+.notice{font-size:11.5px;color:var(--muted);margin-top:9px;line-height:1.5;text-align:center}
 
-footer.site-footer{text-align:center;color:var(--muted);font-size:12.5px;padding:8px 10px 30px}
+footer.site-footer{text-align:center;color:var(--muted);font-size:12px;padding:6px 10px 24px}
 footer.site-footer strong{color:var(--jungle-800)}
 
 @media (max-width:560px){
- .row{flex-direction:column}
+ .row-2{grid-template-columns:1fr}
  .share-actions{flex-direction:column}
- .stats-grid{grid-template-columns:1fr 1fr}
- .card{padding:18px}
+ .card{padding:15px}
 }
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 </style>
 </head>
-<body>
+<body data-mode="split">
 <div class="app">
 
 <header class="hero">
@@ -224,28 +268,35 @@ footer.site-footer strong{color:var(--jungle-800)}
   <div class="brand">
    <span class="logo-wrap" aria-hidden="true">
     <svg viewBox="0 0 64 64">
-     <defs>
-      <linearGradient id="furGrad" x1="0" y1="0" x2="1" y2="1">
-       <stop offset="0" stop-color="#243a2d"/>
-       <stop offset="1" stop-color="#0a0f0c"/>
-      </linearGradient>
-     </defs>
-     <path d="M12 26 L19 8 L28 24 Z" fill="url(#furGrad)"/>
-     <path d="M52 26 L45 8 L36 24 Z" fill="url(#furGrad)"/>
-     <path d="M32 16c-13 0-21 10-21 21 0 11 9 19 21 19s21-8 21-19c0-11-8-21-21-21z" fill="url(#furGrad)"/>
-     <path d="M6 33h8M6 36h7M6 39h8" stroke="#e9e4d8" stroke-width=".8" stroke-linecap="round" opacity=".5"/>
-     <path d="M50 33h8M51 36h7M50 39h8" stroke="#e9e4d8" stroke-width=".8" stroke-linecap="round" opacity=".5"/>
-     <ellipse class="eye" cx="23.5" cy="38" rx="4.8" ry="5.8" fill="#f2b134"/>
-     <ellipse class="eye" cx="40.5" cy="38" rx="4.8" ry="5.8" fill="#f2b134"/>
-     <ellipse cx="23.5" cy="39.2" rx="1.9" ry="4.2" fill="#141110"/>
-     <ellipse cx="40.5" cy="39.2" rx="1.9" ry="4.2" fill="#141110"/>
-     <path d="M32 44.5l-3.6 3.6h7.2z" fill="#4a3430"/>
-     <path d="M32 48.1v2.2M25.8 51q6.2 3 12.4 0" stroke="#e9e4d8" stroke-width="1.3" fill="none" stroke-linecap="round" opacity=".85"/>
+     <defs><linearGradient id="furGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#243a2d"/><stop offset="1" stop-color="#0a0f0c"/></linearGradient></defs>
+     <!-- pointed ears -->
+     <path d="M14 24 L15 6 L29 18 Z" fill="url(#furGrad)"/>
+     <path d="M50 24 L49 6 L35 18 Z" fill="url(#furGrad)"/>
+     <path d="M18 20 L18.6 10 L25 18 Z" fill="#3c2b28" opacity=".55"/>
+     <path d="M46 20 L45.4 10 L39 18 Z" fill="#3c2b28" opacity=".55"/>
+     <!-- sleek head -->
+     <path d="M32 12 C18 12 12 22 13 33 C14 44 22 54 32 55 C42 54 50 44 51 33 C52 22 46 12 32 12 Z" fill="url(#furGrad)"/>
+     <!-- cheek tufts -->
+     <path d="M13.5 32 L4 29 L11.5 36 L3.5 39 L12.5 42 Z" fill="url(#furGrad)"/>
+     <path d="M50.5 32 L60 29 L52.5 36 L60.5 39 L51.5 42 Z" fill="url(#furGrad)"/>
+     <!-- brow ridges -->
+     <path d="M20 31 q5.5 -4.5 10.5 -1.5" stroke="#0a0f0c" stroke-width="1.3" fill="none" stroke-linecap="round" opacity=".8"/>
+     <path d="M44 31 q-5.5 -4.5 -10.5 -1.5" stroke="#0a0f0c" stroke-width="1.3" fill="none" stroke-linecap="round" opacity=".8"/>
+     <!-- fierce almond eyes (glow) -->
+     <path class="eye" d="M19 34 q5.2 -5.2 10.4 0 q-5.2 4.4 -10.4 0 Z" fill="#f2b134"/>
+     <path class="eye" d="M45 34 q-5.2 -5.2 -10.4 0 q5.2 4.4 10.4 0 Z" fill="#f2b134"/>
+     <ellipse cx="24.2" cy="34.6" rx="1.6" ry="3.1" fill="#141110"/>
+     <ellipse cx="39.8" cy="34.6" rx="1.6" ry="3.1" fill="#141110"/>
+     <!-- nose + muzzle -->
+     <path d="M32 40 l-3.2 3.3 h6.4 Z" fill="#4a3430"/>
+     <path d="M32 43.3 v2.4 M26 48 q6 3.2 12 0" stroke="#e9e4d8" stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".85"/>
+     <!-- whiskers -->
+     <path d="M30 45 q-9 1 -14 -1 M34 45 q9 1 14 -1" stroke="#e9e4d8" stroke-width=".7" fill="none" stroke-linecap="round" opacity=".4"/>
     </svg>
    </span>
    <div class="brand-text">
     <h1>PantherSplits</h1>
-    <p>Split group costs like the sleekest hunter in the jungle.</p>
+    <p>Split shared costs or run a common pot — free, no signup.</p>
    </div>
   </div>
   <div class="hero-actions">
@@ -263,18 +314,38 @@ footer.site-footer strong{color:var(--jungle-800)}
  </div>
 </header>
 
+<div class="mode-bar">
+ <div class="seg" role="tablist" aria-label="Choose how to split">
+  <button id="segSplit" role="tab" onclick="setMode('split')">
+   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M4 19c0-3 2.5-5 5-5s5 2 5 5"/><path d="M15 14c2.2 0 4 1.6 4 4"/></svg>
+   Split
+  </button>
+  <button id="segPool" role="tab" onclick="setMode('pool')">
+   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h13a3 3 0 013 3v4a3 3 0 01-3 3H6a3 3 0 01-3-3V7a2 2 0 012-2h9"/><path d="M16 13h.01"/></svg>
+   Shared Pot
+  </button>
+ </div>
+</div>
+
 <main>
 <div class="layout">
 
  <div class="col col-main">
   <section class="card">
    <div class="card-head">
-    <span class="eyebrow">Step 1</span>
-    <h2>Who's splitting?</h2>
-    <p class="hint">Add everyone in the group. You can rename them anytime.</p>
+    <span class="step-badge">1</span>
+    <h2 id="step1title">Who's splitting?</h2>
+    <p class="hint" id="step1hint"></p>
+   </div>
+   <div id="poolControls" class="only-pool pool-controls">
+    <div class="pool-default">
+     <span class="pd-label">Everyone puts in</span>
+     <span class="rs-field"><i>₹</i><input id="poolDefault" type="number" min="0" step="1" onkeydown="blockBadNumberKeys(event)" oninput="data.poolDefault=Math.max(0,Number(this.value)||0);save()" aria-label="Default contribution"></span>
+     <button class="btn btn-outline btn-sm" onclick="applyDefaultToAll()">Apply to all</button>
+    </div>
    </div>
    <div class="p-grid" id="participants"></div>
-   <button class="btn btn-ghost" onclick="addParticipant()">
+   <button class="btn btn-ghost mt10" onclick="addParticipant(true)">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
     Add participant
    </button>
@@ -282,53 +353,56 @@ footer.site-footer strong{color:var(--jungle-800)}
 
   <section class="card">
    <div class="card-head">
-    <span class="eyebrow">Step 2</span>
-    <h2>Add an expense</h2>
-    <p class="hint">Log every cost as you go — petrol, hotel, snacks, all of it.</p>
+    <span class="step-badge">2</span>
+    <h2 id="step2title">Add an expense</h2>
+    <p class="hint" id="step2hint"></p>
    </div>
-   <div class="row">
-    <span class="field"><input id="desc" placeholder="Expense description" maxlength="60" aria-label="Expense description"></span>
-    <span class="field"><input id="amount" type="number" min="0.01" max="10000000" step="0.01" placeholder="Amount ₹" onkeydown="blockBadNumberKeys(event)" oninput="clampAmountInput(this)" aria-label="Amount"></span>
+   <div class="row-2">
+    <span class="field"><input id="desc" placeholder="What was it for?" maxlength="60" aria-label="Expense description" onkeydown="if(event.key==='Enter')addExpense()"></span>
+    <span class="field"><input id="amount" type="number" min="0.01" max="10000000" step="0.01" placeholder="Amount ₹" onkeydown="blockBadNumberKeys(event);if(event.key==='Enter')addExpense()" oninput="clampAmountInput(this)" aria-label="Amount"></span>
    </div>
-   <div class="row" style="margin-top:10px">
-    <span class="field"><select id="paidBy" aria-label="Paid by"></select></span>
-    <button class="btn btn-primary" onclick="addExpense()">
-     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-     Add expense
-    </button>
+   <span class="field only-split mt10"><select id="paidBy" aria-label="Paid by"></select></span>
+   <div class="share-pick" id="shareChipsWrap">
+    <span class="chips-label" id="shareChipsLabel">Split among <button type="button" class="all-toggle" onclick="selectAllShare()">Everyone</button></span>
+    <div class="chips" id="shareChips"></div>
    </div>
-   <div id="expenses" style="margin-top:8px"></div>
+   <button class="btn btn-primary mt10" style="width:100%" onclick="addExpense()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+    Add expense
+   </button>
+   <div id="expenses" class="expenses-scroll"></div>
   </section>
  </div>
 
  <div class="col col-side">
   <section class="card">
    <div class="card-head">
-    <span class="eyebrow">Live tally</span>
+    <span class="step-badge" style="background:var(--leaf);color:#fff">✓</span>
     <h2>Where things stand</h2>
    </div>
    <div class="stats-grid" id="stats"></div>
-   <div id="balances"></div>
+   <div id="potStatus"></div>
+   <div id="balances" class="balances-scroll"></div>
   </section>
 
   <section class="card">
    <div class="card-head">
-    <span class="eyebrow">Final step</span>
+    <span class="step-badge">3</span>
     <h2>Settle up</h2>
-    <p class="hint">Who pays what, and to whom.</p>
+    <p class="hint">The fewest transactions to make everyone even.</p>
    </div>
-   <div id="settlement"></div>
+   <div id="settlement" class="settle-scroll"></div>
    <div class="share-actions">
     <button class="btn btn-whatsapp" onclick="shareWhatsApp()">
      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.5 15.2L2 22l4.9-1.5A10 10 0 1012 2zm0 1.8a8.2 8.2 0 018.2 8.2 8.2 8.2 0 01-8.2 8.2 8.1 8.1 0 01-4.2-1.2l-.3-.2-3 .9.9-2.9-.2-.3A8.2 8.2 0 0112 3.8zm-3 4.2c-.2 0-.5.1-.7.4-.2.3-.9.8-.9 2s.9 2.4 1 2.6c.1.1 1.8 2.8 4.4 3.8 2.1.9 2.5.7 3 .6.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.4-.3-.1-1.5-.8-1.8-.8-.2-.1-.4-.1-.6.1-.2.3-.7.8-.8 1-.1.1-.3.2-.5.1-.3-.1-1.1-.4-2.1-1.3-.8-.7-1.3-1.6-1.4-1.9-.2-.3 0-.4.1-.6l.4-.4c.1-.2.2-.3.2-.5.1-.2 0-.4 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.6-.4z"/></svg>
-     Share on WhatsApp
+     WhatsApp
     </button>
     <button class="btn btn-outline" onclick="copyShareLink()">
      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.5.5l2-2a5 5 0 00-7-7l-1 1"/><path d="M14 11a5 5 0 00-7.5-.5l-2 2a5 5 0 007 7l1-1"/></svg>
      Copy link
     </button>
    </div>
-   <div class="notice">The shareable link stores the project in the URL using lightweight obfuscation. No account or server storage is required.</div>
+   <div class="notice">Everything stays in your browser. The share link packs the whole project into the URL — no account, no server.</div>
   </section>
  </div>
 
@@ -339,129 +413,251 @@ footer.site-footer strong{color:var(--jungle-800)}
 </div>
 
 <script>
-(function migrateLegacyData(){
- // One-time migration from the old "Money Splitter" localStorage key.
- // Runs once, then removes the legacy key so Reset Everything can't
- // resurrect old data on the next reload.
- if(localStorage.getItem("pantherSplits")===null){
-   let legacy=localStorage.getItem("moneySplitter");
-   if(legacy)localStorage.setItem("pantherSplits",legacy);
- }
- localStorage.removeItem("moneySplitter");
-})();
+const LSKEY="pantherSplitsV10";
 
-let data=JSON.parse(localStorage.getItem("pantherSplits")||"null")||{
- participants:[{id:1,name:"Person 1"},{id:2,name:"Person 2"}],
+let data=JSON.parse(localStorage.getItem(LSKEY)||"null")||{
+ mode:"split",
+ poolDefault:500,
+ collectorId:null,
+ participants:[{id:1,name:"",contribution:500},{id:2,name:"",contribution:500}],
  expenses:[]
 };
 
-function normalizeData(){
- data.participants.forEach(p=>delete p.upfront);
- data.expenses.forEach(e=>{
-   delete e.paidFrom;
-   if(e.paidBy!==undefined)e.paidBy=Number(e.paidBy);
- });
-}
-
-function save(){localStorage.setItem("pantherSplits",JSON.stringify(data))}
-function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-function initial(name){return esc((name||"?").trim().charAt(0).toUpperCase()||"?")}
-let editingExpenseId=null;
-const pencilSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/></svg>';
-const checkSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
-function addParticipant(){data.participants.push({id:Date.now(),name:"Person "+(data.participants.length+1)});save();render()}
-function removeParticipant(id){
- if(data.participants.length<=1)return alert("At least one participant is required.");
- if(data.expenses.some(e=>e.paidBy===id))return alert("This person has expenses. Delete/reassign those expenses first.");
- data.participants=data.participants.filter(p=>p.id!==id);save();render()
-}
-const MAX_AMOUNT=10000000; // ₹1,00,00,000 per expense — generous ceiling, blocks runaway input
+const MAX_AMOUNT=10000000;
 const MAX_DESC_LEN=60;
 const MAX_NAME_LEN=40;
+let editingExpenseId=null;
+let newShareSel=[];   // ids selected for the NEW expense (split mode)
+let editShareSel=[];  // ids selected while editing an expense (split mode)
+let idSeq=Date.now();
+function uid(){return ++idSeq}
 
-function blockBadNumberKeys(ev){
- // Prevent typing characters that create scientific notation or negatives in amount fields.
- if(["e","E","+","-"].includes(ev.key))ev.preventDefault();
+const pencilSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/></svg>';
+const checkSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+
+function save(){localStorage.setItem(LSKEY,JSON.stringify(data))}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function allIds(){return data.participants.map(p=>p.id)}
+
+/* Normalise / repair the data object into the v10 schema. Safe to run on
+   freshly loaded, imported, or shared data. */
+function normalizeData(){
+ if(!["split","pool"].includes(data.mode))data.mode="split";
+ let pd=Number(data.poolDefault);
+ data.poolDefault=(isFinite(pd)&&pd>=0)?pd:500;
+ if(!Array.isArray(data.participants))data.participants=[];
+ data.participants.forEach(p=>{
+   delete p.upfront;
+   p.id=Number(p.id);
+   if(typeof p.name!=="string")p.name=String(p.name||"");
+   let c=Number(p.contribution);
+   p.contribution=(isFinite(c)&&c>=0)?Math.round(c*100)/100:data.poolDefault;
+ });
+ let ids=new Set(data.participants.map(p=>p.id));
+ if(!Array.isArray(data.expenses))data.expenses=[];
+ data.expenses.forEach(e=>{
+   delete e.paidFrom;
+   e.paidBy=Number(e.paidBy);
+   if(!ids.has(e.paidBy))e.paidBy=data.participants[0]?data.participants[0].id:e.paidBy;
+   let sb=Array.isArray(e.sharedBy)?e.sharedBy.map(Number).filter(x=>ids.has(x)):[];
+   if(!sb.length)sb=[...ids];
+   e.sharedBy=sb;
+ });
+ data.collectorId=ids.has(Number(data.collectorId))?Number(data.collectorId):(data.participants[0]?data.participants[0].id:null);
+ data.participants.forEach(p=>{if(p.id>idSeq)idSeq=p.id});
+ data.expenses.forEach(e=>{if(e.id>idSeq)idSeq=e.id});
+ newShareSel=allIds();
 }
 
+/* ---------- names / avatars ---------- */
+function displayName(p){
+ let name=(p.name||"").trim();
+ if(name)return name;
+ let idx=data.participants.findIndex(x=>x.id===p.id);
+ return "Person "+(idx+1);
+}
+function avatarLabel(p){
+ let name=(p.name||"").trim();
+ if(name)return esc(name.charAt(0).toUpperCase());
+ let idx=data.participants.findIndex(x=>x.id===p.id);
+ return String(idx+1);
+}
+
+/* ---------- participants ---------- */
+function addParticipant(focusIt){
+ let nid=uid();
+ data.participants.push({id:nid,name:"",contribution:data.poolDefault});
+ if(!newShareSel.includes(nid))newShareSel.push(nid); // new person is in on new expenses by default
+ save();render();
+ if(focusIt)focusParticipant(data.participants.length-1);
+}
+function removeParticipant(id){
+ if(data.participants.length<=1)return alert("At least one participant is required.");
+ if(data.expenses.some(e=>e.sharedBy&&e.sharedBy.length===1&&Number(e.sharedBy[0])===Number(id)))
+   return alert("This person is the only one sharing an expense. Edit that expense first.");
+ if(data.mode==="split" && data.expenses.some(e=>Number(e.paidBy)===Number(id)))
+   return alert("This person paid for an expense. Delete or reassign it first.");
+ data.participants=data.participants.filter(p=>p.id!==id);
+ let ids=new Set(data.participants.map(p=>p.id));
+ data.expenses.forEach(e=>{
+   e.sharedBy=(e.sharedBy||[]).filter(x=>ids.has(Number(x)));
+   if(!e.sharedBy.length)e.sharedBy=[...ids];
+   if(!ids.has(Number(e.paidBy)))e.paidBy=data.participants[0].id;
+ });
+ if(!ids.has(Number(data.collectorId)))data.collectorId=data.participants[0].id;
+ newShareSel=newShareSel.filter(x=>ids.has(x));if(!newShareSel.length)newShareSel=allIds();
+ save();render();
+}
+function focusParticipant(index){
+ requestAnimationFrame(()=>{
+  let inputs=document.querySelectorAll("#participants .p-input");
+  if(inputs[index]){inputs[index].focus();inputs[index].select();}
+ });
+}
+/* Live name edit — no rebuild of the participant inputs (keeps focus/caret). */
+function updateP(id,value,inputEl){
+ let p=data.participants.find(x=>x.id===id);
+ if(!p)return;
+ p.name=String(value).slice(0,MAX_NAME_LEN);
+ save();
+ if(inputEl){
+   let avatar=inputEl.parentElement.querySelector(".p-avatar");
+   if(avatar)avatar.textContent=avatarLabel(p);
+   inputEl.placeholder=displayName(p);
+ }
+ refreshDependent();
+}
+function updateContribution(id,val){
+ let p=data.participants.find(x=>x.id===id);if(!p)return;
+ let n=Number(val);
+ if(!isFinite(n)||n<0||n>MAX_AMOUNT)return; // reject bad keystroke, keep last value
+ p.contribution=Math.round(n*100)/100;
+ save();calculate();
+}
+function setCollector(id){data.collectorId=id;save();renderParticipants();calculate();}
+function applyDefaultToAll(){
+ let n=Number(document.getElementById("poolDefault").value);
+ if(!isFinite(n)||n<0)return alert("Enter a valid amount.");
+ data.poolDefault=Math.round(n*100)/100;
+ data.participants.forEach(p=>p.contribution=data.poolDefault);
+ save();render();
+}
+/* Rebuilds only the panels that depend on names — never #participants. */
+function refreshDependent(){
+ if(data.mode==="split")syncPaidBy();
+ renderShareChips();
+ renderExpenses();
+ calculate();
+}
+function handleNameKey(ev,index){
+ if(ev.key==="Enter"){
+   ev.preventDefault();
+   if(index>=data.participants.length-1)addParticipant(true);
+   else focusParticipant(index+1);
+ }
+}
+function renderParticipants(){
+ let el=document.getElementById("participants");
+ if(data.mode==="pool"){
+   el.innerHTML=data.participants.map((p,i)=>{
+     let isC=Number(p.id)===Number(data.collectorId);
+     return `<div class="p-row pot-row ${isC?'is-collector':''}">
+       <button class="star" title="${isC?'Holds the pot':'Mark as pot holder'}" aria-label="Mark as pot holder" onclick="setCollector(${p.id})">${isC?'★':'☆'}</button>
+       <span class="p-avatar">${avatarLabel(p)}</span>
+       <input class="p-input" value="${esc(p.name)}" placeholder="${esc(displayName(p))}" maxlength="${MAX_NAME_LEN}"
+         oninput="updateP(${p.id},this.value,this)" onkeydown="handleNameKey(event,${i})" aria-label="Participant name">
+       <span class="contrib"><i>₹</i><input class="c-input" type="number" min="0" step="1" value="${Number(p.contribution)||0}" onkeydown="blockBadNumberKeys(event)" oninput="updateContribution(${p.id},this.value)" aria-label="Contribution"></span>
+       <button class="icon-btn danger-btn" tabindex="-1" onclick="removeParticipant(${p.id})" aria-label="Remove participant" title="Remove">×</button>
+     </div>`;
+   }).join("");
+ }else{
+   el.innerHTML=data.participants.map((p,i)=>`
+     <div class="p-row">
+       <span class="p-avatar">${avatarLabel(p)}</span>
+       <input class="p-input" value="${esc(p.name)}" placeholder="${esc(displayName(p))}" maxlength="${MAX_NAME_LEN}"
+         oninput="updateP(${p.id},this.value,this)" onkeydown="handleNameKey(event,${i})" aria-label="Participant name">
+       <button class="icon-btn danger-btn" tabindex="-1" onclick="removeParticipant(${p.id})" aria-label="Remove participant" title="Remove">×</button>
+     </div>`).join("");
+ }
+}
+
+/* ---------- share chips (split mode) ---------- */
+function chipHtml(p,on,handler){
+ return `<button type="button" class="chip ${on?'on':''}" onclick="${handler}(${p.id})"><span class="dot">${avatarLabel(p)}</span>${esc(displayName(p))}</button>`;
+}
+function renderShareChips(){
+ let el=document.getElementById("shareChips");if(!el)return;
+ newShareSel=newShareSel.filter(id=>data.participants.some(p=>p.id===id));
+ if(!newShareSel.length)newShareSel=allIds();
+ el.innerHTML=data.participants.map(p=>chipHtml(p,newShareSel.includes(p.id),"toggleShare")).join("");
+}
+function toggleShare(id){
+ if(newShareSel.includes(id))newShareSel=newShareSel.filter(x=>x!==id);
+ else newShareSel.push(id);
+ if(!newShareSel.length)newShareSel=[id];
+ renderShareChips();
+}
+function selectAllShare(){newShareSel=allIds();renderShareChips();}
+function editChipsHtml(){
+ return data.participants.map(p=>chipHtml(p,editShareSel.includes(p.id),"toggleEditShare")).join("");
+}
+function toggleEditShare(id){
+ if(editShareSel.includes(id))editShareSel=editShareSel.filter(x=>x!==id);
+ else editShareSel.push(id);
+ if(!editShareSel.length)editShareSel=[id];
+ let c=document.getElementById("edit-chips-"+editingExpenseId);if(c)c.innerHTML=editChipsHtml();
+}
+function selectAllEditShare(){editShareSel=allIds();let c=document.getElementById("edit-chips-"+editingExpenseId);if(c)c.innerHTML=editChipsHtml();}
+
+/* ---------- number input guards ---------- */
+function blockBadNumberKeys(ev){if(["e","E","+","-"].includes(ev.key))ev.preventDefault()}
 function clampAmountInput(el){
- // Behaves like maxlength: a keystroke that would push the value past the
- // cap is simply rejected and the field reverts to its last valid content —
- // never snaps to a random round number.
  let prev=el.dataset.prevValid||"";
-
  if(el.value===""){el.dataset.prevValid="";return}
-
  let num=Number(el.value);
  if(!isFinite(num)||num>MAX_AMOUNT){
    let pos=Math.max(0,(el.selectionStart||prev.length)-1);
-   el.value=prev;
-   try{el.setSelectionRange(pos,pos)}catch(e){}
-   return;
+   el.value=prev;try{el.setSelectionRange(pos,pos)}catch(e){}return;
  }
-
  el.dataset.prevValid=el.value;
 }
-
-function fmt(n){
- // Indian-style comma grouping for on-screen amounts, e.g. 1,00,000.00
- return Number(n).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2});
-}
-
+function fmt(n){return Number(n).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2})}
 function validateAmount(raw){
  let amount=Number(raw);
- if(!isFinite(amount)||amount<=0)
-   return {ok:false,error:"Enter a valid amount greater than ₹0."};
- if(amount>MAX_AMOUNT)
-   return {ok:false,error:`That amount looks too large. Please keep it under ₹${MAX_AMOUNT.toLocaleString("en-IN")}.`};
+ if(!isFinite(amount)||amount<=0)return {ok:false,error:"Enter a valid amount greater than ₹0."};
+ if(amount>MAX_AMOUNT)return {ok:false,error:`Keep it under ₹${MAX_AMOUNT.toLocaleString("en-IN")}.`};
  return {ok:true,amount:Math.round(amount*100)/100};
 }
 
-function updateP(id,field,value){
- let p=data.participants.find(x=>x.id===id);
- if(!p)return;
- p[field]=String(value).trim().slice(0,MAX_NAME_LEN);
- save();
- render();
-}
-
-function renderParticipants(){
- let el=document.getElementById("participants");
- el.innerHTML=data.participants.map(p=>`
- <div class="p-row">
-   <span class="p-avatar">${initial(p.name)}</span>
-   <input class="p-input" value="${esc(p.name)}" maxlength="${MAX_NAME_LEN}" onchange="updateP(${p.id},'name',this.value)" aria-label="Participant name">
-   <button class="icon-btn danger-btn" onclick="removeParticipant(${p.id})" aria-label="Remove participant" title="Remove">×</button>
- </div>`).join("");
-}
-
+/* ---------- expenses ---------- */
 function addExpense(){
  let desc=document.getElementById("desc").value.trim().slice(0,MAX_DESC_LEN),
-     check=validateAmount(document.getElementById("amount").value),
-     paidBy=Number(document.getElementById("paidBy").value);
-
+     check=validateAmount(document.getElementById("amount").value);
  if(!desc)return alert("Enter a description for this expense.");
  if(!check.ok)return alert(check.error);
- if(!paidBy)return alert("Select who paid this expense.");
-
- data.expenses.push({
-   id:Date.now(),
-   desc,
-   amount:check.amount,
-   paidBy
- });
-
+ if(!data.participants.length)return alert("Add at least one participant first.");
+ let exp={id:uid(),desc,amount:check.amount,sharedBy:(newShareSel&&newShareSel.length)?[...newShareSel]:allIds()};
+ if(data.mode==="pool"){
+   exp.paidBy=data.collectorId||data.participants[0].id;
+ }else{
+   let paidBy=Number(document.getElementById("paidBy").value);
+   if(!paidBy)return alert("Select who paid this expense.");
+   exp.paidBy=paidBy;
+ }
+ data.expenses.push(exp);
  document.getElementById("desc").value="";
- let amountEl=document.getElementById("amount");
- amountEl.value="";
- amountEl.dataset.prevValid="";
- save();
+ let amountEl=document.getElementById("amount");amountEl.value="";amountEl.dataset.prevValid="";
+ newShareSel=allIds();
+ save();render();
+ document.getElementById("desc").focus();
+}
+function removeExpense(id){data.expenses=data.expenses.filter(e=>e.id!==id);if(editingExpenseId===id)editingExpenseId=null;save();render()}
+function startEditExpense(id){
+ editingExpenseId=id;
+ let e=data.expenses.find(x=>x.id===id);
+ editShareSel=(e&&e.sharedBy&&e.sharedBy.length)?e.sharedBy.map(Number):allIds();
  render();
 }
-
-function removeExpense(id){data.expenses=data.expenses.filter(e=>e.id!==id);if(editingExpenseId===id)editingExpenseId=null;save();render()}
-
-function startEditExpense(id){editingExpenseId=id;render()}
 function cancelEditExpense(){editingExpenseId=null;render()}
 function handleEditKey(ev,id){
  if(ev.key==="Enter"){ev.preventDefault();saveEditExpense(id)}
@@ -469,404 +665,372 @@ function handleEditKey(ev,id){
 }
 function saveEditExpense(id){
  let desc=document.getElementById("edit-desc-"+id).value.trim().slice(0,MAX_DESC_LEN),
-     check=validateAmount(document.getElementById("edit-amount-"+id).value),
-     paidBy=Number(document.getElementById("edit-paidby-"+id).value);
-
+     check=validateAmount(document.getElementById("edit-amount-"+id).value);
  if(!desc)return alert("Enter a description for this expense.");
  if(!check.ok)return alert(check.error);
- if(!paidBy)return alert("Select who paid this expense.");
-
- let exp=data.expenses.find(x=>x.id===id);
- if(!exp)return;
- exp.desc=desc;exp.amount=check.amount;exp.paidBy=paidBy;
-
- editingExpenseId=null;
- save();
- render();
+ let exp=data.expenses.find(x=>x.id===id);if(!exp)return;
+ exp.desc=desc;exp.amount=check.amount;
+ exp.sharedBy=(editShareSel&&editShareSel.length)?[...editShareSel]:allIds();
+ if(data.mode==="split"){
+   let paidBy=Number(document.getElementById("edit-paidby-"+id).value);
+   if(!paidBy)return alert("Select who paid this expense.");
+   exp.paidBy=paidBy;
+ }
+ editingExpenseId=null;save();render();
 }
-
 function renderExpenses(){
  let el=document.getElementById("expenses");
-
  if(!data.expenses.length){
    el.innerHTML='<div class="empty">No expenses yet — just paw prints. Add your first one above.</div>';
    return;
  }
-
+ let n=data.participants.length;
  el.innerHTML=data.expenses.map(e=>{
    if(editingExpenseId===e.id){
+     if(data.mode==="pool"){
+       return `<div class="e-row-edit">
+         <span class="field e-edit-desc"><input id="edit-desc-${e.id}" value="${esc(e.desc)}" maxlength="60" onkeydown="handleEditKey(event,${e.id})" aria-label="Edit description"></span>
+         <span class="field e-edit-amount"><input id="edit-amount-${e.id}" type="number" min="0.01" max="10000000" step="0.01" value="${Number(e.amount)}" data-prev-valid="${Number(e.amount)}" onkeydown="blockBadNumberKeys(event);handleEditKey(event,${e.id})" oninput="clampAmountInput(this)" aria-label="Edit amount"></span>
+         <div class="e-edit-actions">
+           <button class="icon-btn save-btn" onclick="saveEditExpense(${e.id})" aria-label="Save changes" title="Save">${checkSvg}</button>
+           <button class="icon-btn cancel-btn" onclick="cancelEditExpense()" aria-label="Cancel edit" title="Cancel">×</button>
+         </div>
+         <div class="edit-chips-wrap"><span class="chips-label">For whom <button type="button" class="all-toggle" onclick="selectAllEditShare()">Everyone</button></span><div class="chips" id="edit-chips-${e.id}">${editChipsHtml()}</div></div>
+       </div>`;
+     }
      return `<div class="e-row-edit">
        <span class="field e-edit-desc"><input id="edit-desc-${e.id}" value="${esc(e.desc)}" maxlength="60" onkeydown="handleEditKey(event,${e.id})" aria-label="Edit description"></span>
        <span class="field e-edit-amount"><input id="edit-amount-${e.id}" type="number" min="0.01" max="10000000" step="0.01" value="${Number(e.amount)}" data-prev-valid="${Number(e.amount)}" onkeydown="blockBadNumberKeys(event);handleEditKey(event,${e.id})" oninput="clampAmountInput(this)" aria-label="Edit amount"></span>
-       <span class="field e-edit-paidby"><select id="edit-paidby-${e.id}" aria-label="Edit paid by">${data.participants.map(p=>`<option value="${p.id}"${Number(p.id)===Number(e.paidBy)?" selected":""}>${esc(p.name)}</option>`).join("")}</select></span>
+       <span class="field e-edit-paidby"><select id="edit-paidby-${e.id}" aria-label="Edit paid by">${data.participants.map(p=>`<option value="${p.id}"${Number(p.id)===Number(e.paidBy)?" selected":""}>${esc(displayName(p))}</option>`).join("")}</select></span>
        <div class="e-edit-actions">
          <button class="icon-btn save-btn" onclick="saveEditExpense(${e.id})" aria-label="Save changes" title="Save">${checkSvg}</button>
          <button class="icon-btn cancel-btn" onclick="cancelEditExpense()" aria-label="Cancel edit" title="Cancel">×</button>
        </div>
+       <div class="edit-chips-wrap"><span class="chips-label">Split among <button type="button" class="all-toggle" onclick="selectAllEditShare()">Everyone</button></span><div class="chips" id="edit-chips-${e.id}">${editChipsHtml()}</div></div>
      </div>`;
    }
-
-   let p=data.participants.find(x=>Number(x.id)===Number(e.paidBy));
+   let meta;
+   if(data.mode==="pool"){
+     let sb=(e.sharedBy&&e.sharedBy.length)?e.sharedBy.map(Number):allIds();
+     if(sb.length<n){
+       let names=sb.map(id=>{let q=data.participants.find(x=>x.id===id);return q?displayName(q):"?";}).join(", ");
+       meta=`From the pot · for ${esc(names)} (${sb.length}/${n})`;
+     }else{
+       meta="From the pot · for everyone";
+     }
+   }else{
+     let p=data.participants.find(x=>Number(x.id)===Number(e.paidBy));
+     let sb=(e.sharedBy&&e.sharedBy.length)?e.sharedBy.map(Number):allIds();
+     let sub=sb.length<n;
+     if(sub){
+       let names=sb.map(id=>{let q=data.participants.find(x=>x.id===id);return q?displayName(q):"?";}).join(", ");
+       meta=`Paid by <strong>${p?esc(displayName(p)):"Unknown"}</strong> · split among ${esc(names)} (${sb.length}/${n})`;
+     }else{
+       meta=`Paid by <strong>${p?esc(displayName(p)):"Unknown"}</strong> · split evenly`;
+     }
+   }
    return `<div class="e-row">
      <div class="e-main">
        <div class="e-desc">${esc(e.desc)}</div>
-       <div class="e-meta">Paid by <strong>${esc(p?.name||"Unknown")}</strong></div>
+       <div class="e-meta">${meta}</div>
      </div>
      <div class="e-amount">₹${fmt(e.amount)}</div>
      <button class="icon-btn edit-btn" onclick="startEditExpense(${e.id})" aria-label="Edit expense" title="Edit">${pencilSvg}</button>
      <button class="icon-btn danger-btn" onclick="removeExpense(${e.id})" aria-label="Remove expense" title="Remove">×</button>
    </div>`;
  }).join("");
-
  if(editingExpenseId!==null){
    let input=document.getElementById("edit-desc-"+editingExpenseId);
    if(input){input.focus();input.select();}
  }
 }
 
-function calculate(){
- let total=data.expenses.reduce((s,e)=>s+Number(e.amount||0),0),
-     n=data.participants.length,
-     share=n?total/n:0;
-
+/* ---------- calculations ---------- */
+function computeSplit(){
+ let total=data.expenses.reduce((s,e)=>s+Number(e.amount||0),0);
  let balances=data.participants.map(p=>{
-   let paid=data.expenses
-     .filter(e=>Number(e.paidBy)===Number(p.id))
-     .reduce((s,e)=>s+Number(e.amount||0),0);
-
-   return {
-     ...p,
-     paid,
-     balance:paid-share
-   };
+   let paid=data.expenses.filter(e=>Number(e.paidBy)===Number(p.id)).reduce((s,e)=>s+Number(e.amount||0),0);
+   let owed=data.expenses.reduce((s,e)=>{
+     let sb=(e.sharedBy&&e.sharedBy.length)?e.sharedBy.map(Number):allIds();
+     return sb.includes(Number(p.id))?s+Number(e.amount||0)/sb.length:s;
+   },0);
+   return {id:p.id,dname:displayName(p),paid,owed,balance:paid-owed};
  });
-
+ return {total,balances};
+}
+function computePool(){
+ let spent=data.expenses.reduce((s,e)=>s+Number(e.amount||0),0);
+ let collected=data.participants.reduce((s,p)=>s+Number(p.contribution||0),0);
+ let n=data.participants.length,leftover=collected-spent;
+ let balances=data.participants.map(p=>{
+   // each person's share = their portion of every item they were in on (per-expense sharing)
+   let consumed=data.expenses.reduce((s,e)=>{
+     let sb=(e.sharedBy&&e.sharedBy.length)?e.sharedBy.map(Number):allIds();
+     return sb.includes(Number(p.id))?s+Number(e.amount||0)/sb.length:s;
+   },0);
+   let isC=Number(p.id)===Number(data.collectorId);
+   return {id:p.id,dname:displayName(p),contributed:Number(p.contribution||0),share:consumed,isCollector:isC,
+     balance:Number(p.contribution||0)-consumed-(isC?leftover:0)};
+ });
+ return {spent,collected,share:(n?spent/n:0),leftover,balances};
+}
+function calculate(){
+ if(data.mode==="pool")return renderPool();
+ return renderSplit();
+}
+function renderSplit(){
+ let {total,balances}=computeSplit();
  document.getElementById("stats").innerHTML=`
-   <div class="stat">
-     <div class="label">Total spent</div>
-     <div class="value">₹${fmt(total)}</div>
-   </div>
-   <div class="stat">
-     <div class="label">Equal share</div>
-     <div class="value">₹${fmt(share)}</div>
-   </div>`;
-
+   <div class="stat"><div class="label">Total spent</div><div class="value">₹${fmt(total)}</div></div>
+   <div class="stat"><div class="label">People</div><div class="value">${data.participants.length}</div></div>`;
+ document.getElementById("potStatus").innerHTML="";
  document.getElementById("balances").innerHTML=balances.map(b=>`
    <div class="balance">
-     <div><span class="who">${esc(b.name)}</span><span class="paid">Paid ₹${fmt(b.paid)}</span></div>
-     <span class="tag ${b.balance>=-.01?'good':'bad'}">
-       ${b.balance>=-.01?'gets back':'owes'} ₹${fmt(Math.abs(b.balance))}
-     </span>
+     <div><span class="who">${esc(b.dname)}</span><span class="paid">Paid ₹${fmt(b.paid)} · Share ₹${fmt(b.owed)}</span></div>
+     <span class="tag ${b.balance>=-.01?'good':'bad'}">${b.balance>=-.01?'gets back':'owes'} ₹${fmt(Math.abs(b.balance))}</span>
    </div>`).join("");
-
  settle(balances);
 }
-
+function renderPool(){
+ let {spent,collected,share,leftover,balances}=computePool();
+ document.getElementById("stats").innerHTML=`
+   <div class="stat"><div class="label">Collected</div><div class="value">₹${fmt(collected)}</div></div>
+   <div class="stat"><div class="label">Spent</div><div class="value">₹${fmt(spent)}</div></div>`;
+ let ps=document.getElementById("potStatus");
+ if(leftover>=.01)ps.innerHTML=`<div class="pot-status good">₹${fmt(leftover)} left in the pot</div>`;
+ else if(leftover<=-.01)ps.innerHTML=`<div class="pot-status bad">₹${fmt(-leftover)} over budget</div>`;
+ else ps.innerHTML=`<div class="pot-status good">Pot spent to the rupee 🐾</div>`;
+ document.getElementById("balances").innerHTML=balances.map(b=>`
+   <div class="balance">
+     <div><span class="who">${esc(b.dname)}</span>${b.isCollector?'<span class="mini-badge">holds pot</span>':''}<span class="paid">Put in ₹${fmt(b.contributed)} · Share ₹${fmt(b.share)}</span></div>
+     <span class="tag ${b.balance>=-.01?'good':'bad'}">${b.balance>=-.01?'gets back':'owes'} ₹${fmt(Math.abs(b.balance))}</span>
+   </div>`).join("");
+ settle(balances);
+}
 function settle(bs){
- let debt=bs.filter(x=>x.balance<-.01).map(x=>({...x,rem:-x.balance})),credit=bs.filter(x=>x.balance>.01).map(x=>({...x,rem:x.balance}));
+ let debt=bs.filter(x=>x.balance<-.01).map(x=>({...x,rem:-x.balance})),
+     credit=bs.filter(x=>x.balance>.01).map(x=>({...x,rem:x.balance}));
  let out=[],i=0,j=0;
  while(i<debt.length&&j<credit.length){
   let a=Math.min(debt[i].rem,credit[j].rem);
-  out.push(`<div class="settle-row"><div class="settle-flow"><span class="who">${esc(debt[i].name)}</span><span class="arrow">→</span><span class="who strong">${esc(credit[j].name)}</span></div><div class="settle-amt">₹${fmt(a)}</div></div>`);
+  out.push(`<div class="settle-row"><div class="settle-flow"><span class="who">${esc(debt[i].dname)}</span><span class="arrow">→</span><span class="who strong">${esc(credit[j].dname)}</span></div><div class="settle-amt">₹${fmt(a)}</div></div>`);
   debt[i].rem-=a;credit[j].rem-=a;if(debt[i].rem<.01)i++;if(credit[j].rem<.01)j++
  }
  document.getElementById("settlement").innerHTML=out.length?out.join(""):'<div class="empty">Everyone is settled up 🐾</div>'
 }
-normalizeData();
+function settleLines(balances){
+ let debt=balances.filter(x=>x.balance<-.01).map(x=>({...x,rem:-x.balance})),
+     credit=balances.filter(x=>x.balance>.01).map(x=>({...x,rem:x.balance}));
+ let out=[],i=0,j=0;
+ while(i<debt.length&&j<credit.length){
+   let a=Math.min(debt[i].rem,credit[j].rem);
+   out.push(`${debt[i].dname} → ${credit[j].dname}: ₹${fmt(a)}`);
+   debt[i].rem-=a;credit[j].rem-=a;if(debt[i].rem<.01)i++;if(credit[j].rem<.01)j++;
+ }
+ return out;
+}
 
+/* ---------- share / export ---------- */
 function encodeSharedData(){
- let payload={
-  v:2,
-  participants:data.participants.map(p=>({id:p.id,name:p.name})),
-  expenses:data.expenses.map(e=>({
-   id:e.id,
-   desc:e.desc,
-   amount:Number(e.amount)||0,
-   paidBy:Number(e.paidBy)
-  }))
- };
-
- // Lightweight obfuscation: XOR the UTF-8 JSON with a fixed key, then Base64URL encode.
- // This is NOT encryption; it only keeps raw values from being readable in the URL.
+ let payload={v:3,mode:data.mode,collectorId:data.collectorId,poolDefault:data.poolDefault,
+  participants:data.participants.map(p=>({id:p.id,name:p.name,contribution:Number(p.contribution)||0})),
+  expenses:data.expenses.map(e=>({id:e.id,desc:e.desc,amount:Number(e.amount)||0,paidBy:Number(e.paidBy),sharedBy:(e.sharedBy||[]).map(Number)}))};
  let json=JSON.stringify(payload),
      bytes=new TextEncoder().encode(json),
      key=new TextEncoder().encode("PantherSplits-v2"),
      out=new Uint8Array(bytes.length);
-
  for(let i=0;i<bytes.length;i++)out[i]=bytes[i]^key[i%key.length];
-
  let binary="";
  for(let i=0;i<out.length;i++)binary+=String.fromCharCode(out[i]);
-
  return btoa(binary).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
 }
-
 function decodeSharedData(encoded){
  let base64=encoded.replace(/-/g,"+").replace(/_/g,"/");
  while(base64.length%4)base64+="=";
-
- let binary=atob(base64),
-     bytes=new Uint8Array(binary.length),
-     key=new TextEncoder().encode("PantherSplits-v2");
-
- for(let i=0;i<binary.length;i++)
-   bytes[i]=binary.charCodeAt(i)^key[i%key.length];
-
- let json=new TextDecoder().decode(bytes),
-     payload=JSON.parse(json);
-
- if(!payload || ![1,2].includes(payload.v) ||
-    !Array.isArray(payload.participants) ||
-    !Array.isArray(payload.expenses))
+ let binary=atob(base64),bytes=new Uint8Array(binary.length),key=new TextEncoder().encode("PantherSplits-v2");
+ for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i)^key[i%key.length];
+ let json=new TextDecoder().decode(bytes),payload=JSON.parse(json);
+ if(!payload || ![1,2,3].includes(payload.v) || !Array.isArray(payload.participants) || !Array.isArray(payload.expenses))
    throw new Error("Invalid shared project.");
-
- if(!payload.participants.length)
-   throw new Error("Shared project has no participants.");
-
+ if(payload.v===1)throw new Error("This shared link was created with an older version. Please create a new share link.");
+ if(!payload.participants.length)throw new Error("Shared project has no participants.");
  let ids=new Set(payload.participants.map(p=>Number(p.id)));
-
  payload.participants.forEach(p=>{
-   if(p.id===undefined || typeof p.name!=="string")
-     throw new Error("Invalid participant data.");
-   delete p.upfront;
+   if(p.id===undefined || typeof p.name!=="string")throw new Error("Invalid participant data.");
  });
-
  payload.expenses.forEach(e=>{
-   if(e.id===undefined || typeof e.desc!=="string" || Number(e.amount)<=0)
-     throw new Error("Invalid expense data.");
-
-   if(payload.v===2){
-     if(!ids.has(Number(e.paidBy)))
-       throw new Error("Invalid expense payer.");
-     e.paidBy=Number(e.paidBy);
-   }else{
-     // v1 shared links came from the old common-pool model.
-     // They cannot be converted reliably to the new per-expense payer model.
-     throw new Error("This shared link was created with an older version. Please create a new share link.");
-   }
-
-   e.amount=Number(e.amount);
-   delete e.paidFrom;
+   if(e.id===undefined || typeof e.desc!=="string" || Number(e.amount)<=0)throw new Error("Invalid expense data.");
+   if(!ids.has(Number(e.paidBy)))throw new Error("Invalid expense payer.");
  });
-
- return {participants:payload.participants,expenses:payload.expenses};
+ let v3=payload.v===3;
+ return {
+   mode:(v3 && payload.mode==="pool")?"pool":"split",
+   poolDefault:(v3 && isFinite(Number(payload.poolDefault)))?Number(payload.poolDefault):500,
+   collectorId:v3?Number(payload.collectorId):null,
+   participants:payload.participants.map(p=>({id:Number(p.id),name:p.name,contribution:v3?(Number(p.contribution)||0):500})),
+   expenses:payload.expenses.map(e=>({id:Number(e.id),desc:e.desc,amount:Number(e.amount),paidBy:Number(e.paidBy),
+     sharedBy:(v3 && Array.isArray(e.sharedBy))?e.sharedBy.map(Number).filter(x=>ids.has(x)):[...ids]}))
+ };
 }
-
-function getShareUrl(){
- return location.origin+location.pathname+"#share="+encodeSharedData();
-}
-
-function getWebsiteUrl(){
- return location.origin+location.pathname;
-}
+function getShareUrl(){return location.origin+location.pathname+"#share="+encodeSharedData()}
+function getWebsiteUrl(){return location.origin+location.pathname}
 
 function getSettlementText(){
- let total=data.expenses.reduce((s,e)=>s+Number(e.amount||0),0),
-     share=data.participants.length?total/data.participants.length:0;
-
- let balances=data.participants.map(p=>{
-   let paid=data.expenses
-     .filter(e=>Number(e.paidBy)===Number(p.id))
-     .reduce((s,e)=>s+Number(e.amount||0),0);
-
-   return {...p,paid,balance:paid-share};
- });
-
- let lines=[];
- lines.push("🐆 PantherSplits — Settlement");
- lines.push("");
- lines.push(`Total expenses: ₹${fmt(total)}`);
- lines.push(`People: ${data.participants.length}`);
- lines.push(`Equal share: ₹${fmt(share)}`);
- lines.push("");
-
- lines.push("📋 All expenses");
- lines.push("");
- data.expenses.forEach(e=>{
-   let p=data.participants.find(x=>Number(x.id)===Number(e.paidBy));
-   lines.push(`• ${e.desc} — ₹${fmt(e.amount)} — paid by ${p?.name||"Unknown"}`);
- });
- lines.push("");
-
- lines.push("💸 Settlement");
- lines.push("");
-
- let debt=balances.filter(x=>x.balance<-.01).map(x=>({...x,rem:-x.balance})),
-     credit=balances.filter(x=>x.balance>.01).map(x=>({...x,rem:x.balance}));
-
- let i=0,j=0;
- while(i<debt.length&&j<credit.length){
-   let amount=Math.min(debt[i].rem,credit[j].rem);
-   lines.push(`${debt[i].name} → ${credit[j].name}: ₹${fmt(amount)}`);
-   debt[i].rem-=amount;
-   credit[j].rem-=amount;
-   if(debt[i].rem<.01)i++;
-   if(credit[j].rem<.01)j++;
+ let lines=["🐆 PantherSplits — Settlement",""];
+ if(data.mode==="pool"){
+   let {spent,collected,leftover,balances}=computePool();
+   let n=data.participants.length;
+   lines.push("Mode: Shared Pot");
+   lines.push(`People: ${n}`);
+   lines.push(`Collected: ₹${fmt(collected)}`);
+   lines.push(`Spent: ₹${fmt(spent)}`);
+   lines.push(leftover>=0?`Left in pot: ₹${fmt(leftover)}`:`Over budget: ₹${fmt(-leftover)}`,"");
+   lines.push("👛 Contributions","");
+   data.participants.forEach(p=>lines.push(`• ${displayName(p)}${Number(p.id)===Number(data.collectorId)?" (holds pot)":""}: ₹${fmt(p.contribution||0)}`));
+   lines.push("","🧾 Spent from the pot","");
+   data.expenses.forEach(e=>{
+     let sb=(e.sharedBy&&e.sharedBy.length)?e.sharedBy.map(Number):allIds();
+     let note=sb.length<n?` (for ${sb.map(id=>{let q=data.participants.find(x=>x.id===id);return q?displayName(q):"?";}).join(", ")})`:"";
+     lines.push(`• ${e.desc} — ₹${fmt(e.amount)}${note}`);
+   });
+   lines.push("","💸 Settlement","");
+   let sl=settleLines(balances);
+   if(sl.length)sl.forEach(l=>lines.push(l));else lines.push("Everyone is settled up 🎉");
+ }else{
+   let {total,balances}=computeSplit();
+   let n=data.participants.length;
+   lines.push("Mode: Split");
+   lines.push(`Total expenses: ₹${fmt(total)}`);
+   lines.push(`People: ${n}`,"");
+   lines.push("🧾 All expenses","");
+   data.expenses.forEach(e=>{
+     let p=data.participants.find(x=>Number(x.id)===Number(e.paidBy));
+     let sb=(e.sharedBy&&e.sharedBy.length)?e.sharedBy.map(Number):allIds();
+     let note=sb.length<n?` (split among ${sb.map(id=>{let q=data.participants.find(x=>x.id===id);return q?displayName(q):"?";}).join(", ")})`:"";
+     lines.push(`• ${e.desc} — ₹${fmt(e.amount)} — paid by ${p?displayName(p):"Unknown"}${note}`);
+   });
+   lines.push("","💸 Settlement","");
+   let sl=settleLines(balances);
+   if(sl.length)sl.forEach(l=>lines.push(l));else lines.push("Everyone is settled up 🎉");
  }
-
- if(!debt.length&&!credit.length)
-   lines.push("Everyone is settled up 🎉");
-
- lines.push("");
- lines.push("Open PantherSplits:");
- lines.push(getWebsiteUrl());
-
+ lines.push("","Open PantherSplits:",getWebsiteUrl());
  return lines.join("\n");
 }
-
 async function copyShareLink(){
  let url=getShareUrl();
-
  try{
    if(navigator.clipboard && window.isSecureContext){
-     await navigator.clipboard.writeText(url);
-     alert("Shareable link copied.");
-     return;
+     await navigator.clipboard.writeText(url);alert("Shareable link copied.");return;
    }
  }catch(e){}
-
- // Fallback for local files / browsers where Clipboard API is unavailable.
  let input=document.createElement("textarea");
- input.value=url;
- input.setAttribute("readonly","");
- input.style.position="fixed";
- input.style.opacity="0";
- document.body.appendChild(input);
- input.select();
-
- let copied=false;
- try{copied=document.execCommand("copy")}catch(e){}
-
+ input.value=url;input.setAttribute("readonly","");
+ input.style.position="fixed";input.style.opacity="0";
+ document.body.appendChild(input);input.select();
+ let copied=false;try{copied=document.execCommand("copy")}catch(e){}
  input.remove();
-
- if(copied)
-   alert("Shareable link copied.");
- else
-   prompt("Copy this shareable link:",url);
+ if(copied)alert("Shareable link copied.");else prompt("Copy this shareable link:",url);
 }
-
 function shareWhatsApp(){
  let text=getSettlementText();
- let url="https://wa.me/?text="+encodeURIComponent(text);
- window.open(url,"_blank","noopener,noreferrer");
+ window.open("https://wa.me/?text="+encodeURIComponent(text),"_blank","noopener,noreferrer");
 }
-
 function loadSharedProject(){
  let match=location.hash.match(/^#share=(.+)$/);
  if(!match)return false;
- try{
-  let shared=decodeSharedData(match[1]);
-  data=shared;
-  normalizeData();
-  return true;
- }catch(e){
-  alert("This shared link could not be opened: "+e.message);
-  history.replaceState(null,"",location.pathname+location.search);
-  return false;
- }
+ try{data=decodeSharedData(match[1]);normalizeData();return true;}
+ catch(e){alert("This shared link could not be opened: "+e.message);history.replaceState(null,"",location.pathname+location.search);return false;}
 }
-
 function saveProject(){
- let project={
-  app:"PantherSplits",
-  version:1,
-  exportedAt:new Date().toISOString(),
-  participants:data.participants,
-  expenses:data.expenses
- };
+ let project={app:"PantherSplits",version:2,exportedAt:new Date().toISOString(),
+  mode:data.mode,collectorId:data.collectorId,poolDefault:data.poolDefault,
+  participants:data.participants,expenses:data.expenses};
  let blob=new Blob([JSON.stringify(project,null,2)],{type:"application/json"});
  let url=URL.createObjectURL(blob);
  let a=document.createElement("a");
- a.href=url;
- a.download="panther-splits-"+new Date().toISOString().slice(0,10)+".json";
- document.body.appendChild(a);
- a.click();
- a.remove();
- URL.revokeObjectURL(url);
+ a.href=url;a.download="panther-splits-"+new Date().toISOString().slice(0,10)+".json";
+ document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
 }
-
 function importProject(event){
- let file=event.target.files[0];
- if(!file)return;
-
+ let file=event.target.files[0];if(!file)return;
  let reader=new FileReader();
-
  reader.onload=function(){
   try{
    let imported=JSON.parse(reader.result);
-
-   if(!imported || !Array.isArray(imported.participants) || !Array.isArray(imported.expenses))
-    throw new Error("Invalid PantherSplits project file.");
-
-   if(imported.participants.length===0)
-    throw new Error("Project must contain at least one participant.");
-
-   let ids=new Set(imported.participants.map(p=>p.id));
+   if(!imported || !Array.isArray(imported.participants) || !Array.isArray(imported.expenses))throw new Error("Invalid PantherSplits project file.");
+   if(imported.participants.length===0)throw new Error("Project must contain at least one participant.");
+   let ids=new Set(imported.participants.map(p=>Number(p.id)));
    imported.participants.forEach(p=>{
-    if(p.id===undefined || typeof p.name!=="string")
-     throw new Error("Invalid participant data.");
-    delete p.upfront;
+    if(p.id===undefined || typeof p.name!=="string")throw new Error("Invalid participant data.");
    });
-
    imported.expenses.forEach(e=>{
-    if(e.id===undefined || typeof e.desc!=="string" || Number(e.amount)<=0)
-     throw new Error("Invalid expense data.");
-    if(e.paidBy===undefined || !ids.has(e.paidBy))
-     throw new Error("Invalid expense payer.");
-    e.amount=Number(e.amount);
-    e.paidBy=Number(e.paidBy);
-    delete e.paidFrom;
+    if(e.id===undefined || typeof e.desc!=="string" || Number(e.amount)<=0)throw new Error("Invalid expense data.");
+    if(e.paidBy===undefined || !ids.has(Number(e.paidBy)))throw new Error("Invalid expense payer.");
    });
-
-   if(!confirm("Import this project? Current data will be replaced."))
-    return;
-
+   if(!confirm("Import this project? Current data will be replaced."))return;
    data={
-    participants:imported.participants,
-    expenses:imported.expenses
+    mode:imported.mode==="pool"?"pool":"split",
+    poolDefault:isFinite(Number(imported.poolDefault))?Number(imported.poolDefault):500,
+    collectorId:imported.collectorId!==undefined?Number(imported.collectorId):null,
+    participants:imported.participants.map(p=>({id:Number(p.id),name:p.name,contribution:isFinite(Number(p.contribution))?Number(p.contribution):500})),
+    expenses:imported.expenses.map(e=>({id:Number(e.id),desc:e.desc,amount:Number(e.amount),paidBy:Number(e.paidBy),
+      sharedBy:Array.isArray(e.sharedBy)?e.sharedBy.map(Number).filter(x=>ids.has(x)):[...ids]}))
    };
-
-   save();
-   render();
-   alert("Project imported successfully.");
-  }
-  catch(err){
-   alert("Could not import project: "+err.message);
-  }
-  finally{
-   event.target.value="";
-  }
+   normalizeData();
+   save();render();alert("Project imported successfully.");
+  }catch(err){alert("Could not import project: "+err.message);}
+  finally{event.target.value="";}
  };
-
  reader.readAsText(file);
 }
+function resetApp(){if(confirm("Reset all participants and expenses?")){localStorage.removeItem(LSKEY);history.replaceState(null,"",location.pathname+location.search);location.reload()}}
 
-function resetApp(){if(confirm("Reset all participants and expenses?")){localStorage.removeItem("pantherSplits");localStorage.removeItem("moneySplitter");history.replaceState(null,"",location.pathname+location.search);location.reload()}}
-function render(){
- renderParticipants();
-
+/* ---------- mode + render ---------- */
+function setMode(m){
+ if(data.mode===m)return;
+ data.mode=m;
+ editingExpenseId=null;
+ if(m==="pool" && !data.participants.some(p=>Number(p.id)===Number(data.collectorId)))
+   data.collectorId=data.participants[0]?data.participants[0].id:null;
+ save();render();
+}
+function renderMode(){
+ document.body.dataset.mode=data.mode;
+ document.getElementById("segSplit").classList.toggle("active",data.mode==="split");
+ document.getElementById("segPool").classList.toggle("active",data.mode==="pool");
+ document.getElementById("step1title").textContent=data.mode==="pool"?"Who's chipping in?":"Who's splitting?";
+ document.getElementById("step1hint").textContent=data.mode==="pool"
+   ? "Add everyone and what each puts into the pot. Tap ★ to mark who's holding the money."
+   : "Type a name and press Enter to jump to the next — Enter on the last box adds another. Blank ones stay “Person 1”, “Person 2”…";
+ document.getElementById("step2title").textContent=data.mode==="pool"?"Spend from the pot":"Add an expense";
+ document.getElementById("step2hint").textContent=data.mode==="pool"
+   ? "Log what was spent from the pot, and who it was for. Press Enter to add fast."
+   : "Log each cost: what it was, who paid, and who's in on it. Press Enter to add fast.";
+ let lbl=document.getElementById("shareChipsLabel");
+ if(lbl)lbl.innerHTML=(data.mode==="pool"?"For whom":"Split among")+' <button type="button" class="all-toggle" onclick="selectAllShare()">Everyone</button>';
+ let pd=document.getElementById("poolDefault");if(pd)pd.value=data.poolDefault;
+}
+function syncPaidBy(){
  let paidByEl=document.getElementById("paidBy");
- if(paidByEl){
-   let current=paidByEl.value;
-   paidByEl.innerHTML=data.participants.map(p=>
-     `<option value="${p.id}">${esc(p.name)}</option>`
-   ).join("");
-   if(data.participants.some(p=>String(p.id)===String(current)))
-     paidByEl.value=current;
-   else if(data.participants.length)
-     paidByEl.value=data.participants[0].id;
- }
-
+ if(!paidByEl)return;
+ let current=paidByEl.value;
+ paidByEl.innerHTML=data.participants.map(p=>`<option value="${p.id}">${esc(displayName(p))}</option>`).join("");
+ if(data.participants.some(p=>String(p.id)===String(current)))paidByEl.value=current;
+ else if(data.participants.length)paidByEl.value=data.participants[0].id;
+}
+function render(){
+ renderMode();
+ renderParticipants();
+ if(data.mode==="split")syncPaidBy();
+ renderShareChips();
  renderExpenses();
  calculate();
 }
+
+normalizeData();
 loadSharedProject();
 render();
-window.addEventListener("hashchange",()=>{
- if(location.hash.startsWith("#share=")){
-  if(loadSharedProject())render();
- }
-});
+window.addEventListener("hashchange",()=>{if(location.hash.startsWith("#share=")){if(loadSharedProject())render();}});
 </script>
 </body>
 </html>
