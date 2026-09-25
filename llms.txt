@@ -1,0 +1,26 @@
+# PantherSplits
+
+> PantherSplits is a free, no-signup web app for splitting group expenses — trips, flatmates, dinners and events. It runs entirely in the browser (no account, no server storage), works out the fewest payments needed to settle up, and shares the result on WhatsApp or as a link. Amounts are in Indian rupees (₹).
+
+Site: https://example.com/
+
+## Modes
+
+- **Split (pay as you go):** each expense records who paid and who it was for. Items shared by only some people are divided only among them. Each person's balance is what they paid minus their share, and the app suggests the fewest payments to even things out.
+- **Shared Pot (chip in first):** everyone contributes a set amount up front (for example ₹500 each), one person holds the pot and pays for things, and at the end the app reconciles it: if money is left over the holder refunds people; if the pot was overspent, people top up the holder. Pot expenses can also be for only some people.
+
+## Worked examples
+
+- Split: Asha pays ₹900 for a cab for Asha, Ben and Chetan; Ben pays ₹300 for snacks for Ben and Chetan. Result: Ben pays Asha ₹150 and Chetan pays Asha ₹450.
+- Shared Pot: four friends put in ₹500 each and Raj holds the pot. They spend ₹1,600, so Raj refunds ₹100 to each of the other three. Had they spent ₹2,400, each of the other three would pay Raj ₹100.
+
+## Key facts
+
+- Price: free. No account, signup, subscription or app install.
+- Privacy: data is stored only in the user's browser (localStorage). Share links carry the project inside the URL itself.
+- Sharing: WhatsApp summary text, copyable share link, and save/import as a JSON file.
+- Platforms: any modern web browser on phone, tablet or computer. Requires JavaScript.
+
+## Pages
+
+- [PantherSplits app and guide](https://example.com/): the calculator plus how it works, features and FAQ.

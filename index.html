@@ -1,11 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#132018">
-<meta name="description" content="PantherSplits — a free group expense calculator. Split shared costs or run a common pot, settle up in seconds. No signup, no server storage.">
-<title>PantherSplits — Free Group Expense Splitter</title>
+<title>Free Bill &amp; Group Expense Splitter, No Signup | PantherSplits</title>
+<meta name="description" content="Free bill &amp; group expense splitter for trips and flatmates. Split items, run a shared pot, settle up in the fewest payments. No signup. Share on WhatsApp.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="application-name" content="PantherSplits">
+<meta name="apple-mobile-web-app-title" content="PantherSplits">
+<!-- SEO: replace https://example.com/ with your real site address everywhere in this file, robots.txt, sitemap.xml and llms.txt -->
+<link rel="canonical" href="https://example.com/">
+
+<!-- Open Graph / social previews (WhatsApp, Facebook, LinkedIn) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PantherSplits">
+<meta property="og:title" content="PantherSplits — Free Bill &amp; Group Expense Splitter">
+<meta property="og:description" content="Split trip, flat and group expenses for free. Shared pot, per-item splits, fewest payments to settle up, WhatsApp sharing. No signup.">
+<meta property="og:url" content="https://example.com/">
+<meta property="og:image" content="https://example.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="PantherSplits panther logo with the text Free group expense splitter">
+<meta property="og:locale" content="en_IN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PantherSplits — Free Bill &amp; Group Expense Splitter">
+<meta name="twitter:description" content="Split trip, flat and group expenses for free. Shared pot, per-item splits, fewest payments to settle up. No signup.">
+<meta name="twitter:image" content="https://example.com/og-image.png">
+
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+
+<!-- Structured data for Google rich results and AI answer engines -->
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@graph":[
+  {
+   "@type":"WebSite",
+   "@id":"https://example.com/#website",
+   "url":"https://example.com/",
+   "name":"PantherSplits",
+   "inLanguage":"en-IN",
+   "description":"Free online bill and group expense splitter with a shared pot mode. No signup."
+  },
+  {
+   "@type":"WebApplication",
+   "@id":"https://example.com/#app",
+   "name":"PantherSplits",
+   "url":"https://example.com/",
+   "image":"https://example.com/og-image.png",
+   "applicationCategory":"FinanceApplication",
+   "applicationSubCategory":"Expense splitter",
+   "operatingSystem":"Any (runs in a web browser)",
+   "browserRequirements":"Requires JavaScript",
+   "inLanguage":"en-IN",
+   "isAccessibleForFree":true,
+   "offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},
+   "description":"PantherSplits splits group expenses for trips, flatmates, dinners and events. Record who paid, split each item among only the people who shared it, or collect a shared pot up front, then settle up with the fewest payments and share the result on WhatsApp. Data stays in the browser; no account is needed.",
+   "featureList":[
+    "Split mode: record who paid each expense and split it among everyone or only some people",
+    "Shared Pot mode: everyone contributes up front, one person holds the pot, leftovers and overspends are reconciled",
+    "Fewest payments needed to settle up",
+    "Share a full summary on WhatsApp or as a link",
+    "Save and import projects as a JSON file",
+    "No signup, no account, data stays on your device",
+    "Indian rupee (₹) formatting"
+   ]
+  },
+  {
+   "@type":"FAQPage",
+   "@id":"https://example.com/#faq",
+   "mainEntity":[
+    {"@type":"Question","name":"Is PantherSplits free?","acceptedAnswer":{"@type":"Answer","text":"Yes. PantherSplits is completely free to use. There is no account, no signup and no subscription."}},
+    {"@type":"Question","name":"Do I need to download an app or create an account?","acceptedAnswer":{"@type":"Answer","text":"No. It runs in any modern web browser on your phone or computer. Just open the page and start adding people and expenses."}},
+    {"@type":"Question","name":"Where is my data stored?","acceptedAnswer":{"@type":"Answer","text":"Only in your own browser, on your device. Nothing is uploaded to a server. When you share a link, the whole project is packed into the link itself, so share it only with people you trust."}},
+    {"@type":"Question","name":"How does PantherSplits work out who owes whom?","acceptedAnswer":{"@type":"Answer","text":"It adds up what each person paid and what each person's fair share is, then suggests the fewest payments needed to make everyone even."}},
+    {"@type":"Question","name":"What is Shared Pot mode?","acceptedAnswer":{"@type":"Answer","text":"Use Shared Pot when everyone puts money in first, for example ₹500 each, and one person holds the pot and pays for things. PantherSplits then tells you how much the holder should refund if money is left over, or how much everyone should top up if the pot was overspent."}},
+    {"@type":"Question","name":"Can I split an expense between only some people?","acceptedAnswer":{"@type":"Answer","text":"Yes. In both modes you can choose who each expense was for, so an item only a few people shared is divided only among them."}},
+    {"@type":"Question","name":"How do I share the result with my group?","acceptedAnswer":{"@type":"Answer","text":"Tap WhatsApp to send a full summary of expenses and who pays whom, or tap Copy link to share a link that opens the same split in anyone's browser."}}
+   ]
+  }
+ ]
+}
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23101a14'/%3E%3Cpath d='M15 24 L16 7 L29 18 Z' fill='%23080c09'/%3E%3Cpath d='M49 24 L48 7 L35 18 Z' fill='%23080c09'/%3E%3Cpath d='M32 13 C19 13 13 23 14 33 C15 44 23 53 32 54 C41 53 49 44 50 33 C51 23 45 13 32 13 Z' fill='%23080c09'/%3E%3Cpath d='M14 32 L4 29 L12 36 L4 39 L13 42 Z' fill='%23080c09'/%3E%3Cpath d='M50 32 L60 29 L52 36 L60 39 L51 42 Z' fill='%23080c09'/%3E%3Cpath d='M20 34 q5 -5 10 0 q-5 4 -10 0 Z' fill='%23f2b134'/%3E%3Cpath d='M44 34 q-5 -5 -10 0 q5 4 10 0 Z' fill='%23f2b134'/%3E%3Cellipse cx='24.5' cy='34.6' rx='1.5' ry='2.8' fill='%23111'/%3E%3Cellipse cx='39.5' cy='34.6' rx='1.5' ry='2.8' fill='%23111'/%3E%3Cpath d='M32 40 l-3 3.2 h6 Z' fill='%233c2b28'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -251,6 +329,30 @@ body[data-mode="pool"] .p-grid{grid-template-columns:repeat(auto-fill,minmax(320
 
 footer.site-footer{text-align:center;color:var(--muted);font-size:12px;padding:6px 10px 24px}
 footer.site-footer strong{color:var(--jungle-800)}
+footer.site-footer nav{margin-bottom:6px}
+footer.site-footer a{color:var(--jungle-700);font-weight:700;text-decoration:none}
+footer.site-footer a:hover{text-decoration:underline}
+
+/* ---------- static guide (SEO / AI-readable) ---------- */
+.guide{margin-top:34px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(18px,3vw,30px);box-shadow:var(--shadow);line-height:1.6}
+.guide h2{font-size:clamp(20px,2.4vw,26px);color:var(--ink)}
+.guide h3{font-family:'Fraunces',Georgia,serif;font-size:18px;margin:26px 0 10px;color:var(--ink)}
+.guide h4{margin:0 0 6px;font-size:15px;color:var(--jungle-800)}
+.guide p,.guide li{font-size:14px;color:#3d443b}
+.guide-lede{margin:8px 0 0;max-width:780px}
+.guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.guide-card{background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.guide-card p{margin:0 0 8px}
+.guide-card .example{margin:0;font-size:13px;color:var(--muted)}
+.guide-steps,.guide-features{margin:0;padding-left:20px}
+.guide-steps li,.guide-features li{margin-bottom:5px}
+.guide-features{columns:2;column-gap:28px}
+.faq details{border-bottom:1px solid var(--line);padding:10px 2px}
+.faq details:last-child{border-bottom:none}
+.faq summary{cursor:pointer;font-weight:700;font-size:14.5px;color:var(--ink)}
+.faq details p{margin:6px 0 0}
+.noscript{background:var(--danger-bg);color:var(--danger-ink);text-align:center;padding:10px;font-weight:700;font-size:13.5px}
+@media (max-width:700px){.guide-grid{grid-template-columns:1fr}.guide-features{columns:1}}
 
 @media (max-width:560px){
  .row-2{grid-template-columns:1fr}
@@ -261,6 +363,7 @@ footer.site-footer strong{color:var(--jungle-800)}
 </style>
 </head>
 <body data-mode="split">
+<noscript><div class="noscript">PantherSplits needs JavaScript to calculate splits. Please enable it in your browser — the guide below still explains how it works.</div></noscript>
 <div class="app">
 
 <header class="hero">
@@ -315,12 +418,12 @@ footer.site-footer strong{color:var(--jungle-800)}
 </header>
 
 <div class="mode-bar">
- <div class="seg" role="tablist" aria-label="Choose how to split">
-  <button id="segSplit" role="tab" onclick="setMode('split')">
+ <div class="seg" role="group" aria-label="Choose how to split">
+  <button type="button" id="segSplit" aria-pressed="true" onclick="setMode('split')">
    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M4 19c0-3 2.5-5 5-5s5 2 5 5"/><path d="M15 14c2.2 0 4 1.6 4 4"/></svg>
    Split
   </button>
-  <button id="segPool" role="tab" onclick="setMode('pool')">
+  <button type="button" id="segPool" aria-pressed="false" onclick="setMode('pool')">
    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h13a3 3 0 013 3v4a3 3 0 01-3 3H6a3 3 0 01-3-3V7a2 2 0 012-2h9"/><path d="M16 13h.01"/></svg>
    Shared Pot
   </button>
@@ -335,7 +438,7 @@ footer.site-footer strong{color:var(--jungle-800)}
    <div class="card-head">
     <span class="step-badge">1</span>
     <h2 id="step1title">Who's splitting?</h2>
-    <p class="hint" id="step1hint"></p>
+    <p class="hint" id="step1hint">Type a name and press Enter to jump to the next — Enter on the last box adds another. Blank ones stay “Person 1”, “Person 2”…</p>
    </div>
    <div id="poolControls" class="only-pool pool-controls">
     <div class="pool-default">
@@ -355,7 +458,7 @@ footer.site-footer strong{color:var(--jungle-800)}
    <div class="card-head">
     <span class="step-badge">2</span>
     <h2 id="step2title">Add an expense</h2>
-    <p class="hint" id="step2hint"></p>
+    <p class="hint" id="step2hint">Log each cost: what it was, who paid, and who's in on it. Press Enter to add fast.</p>
    </div>
    <div class="row-2">
     <span class="field"><input id="desc" placeholder="What was it for?" maxlength="60" aria-label="Expense description" onkeydown="if(event.key==='Enter')addExpense()"></span>
@@ -407,9 +510,73 @@ footer.site-footer strong{color:var(--jungle-800)}
  </div>
 
 </div>
+
+<!-- Static guide: readable by search engines and AI crawlers that don't run JavaScript -->
+<article class="guide" id="how-it-works" aria-labelledby="guide-title">
+ <header class="guide-head">
+  <h2 id="guide-title">A free bill splitter for trips, flatmates and group outings</h2>
+  <p class="guide-lede">PantherSplits is a free, no-signup expense splitter that runs entirely in your browser. Add the people, log what was spent, and it works out the fewest payments needed to settle up. Then send the whole summary to your group on WhatsApp in one tap.</p>
+ </header>
+
+ <section aria-labelledby="modes-title">
+  <h3 id="modes-title">Two ways to split</h3>
+  <div class="guide-grid">
+   <div class="guide-card">
+    <h4>Split — pay as you go</h4>
+    <p>For when different people pay for different things. Record who paid for each expense and who it was for. Items shared by only some people are divided only among them.</p>
+    <p class="example"><strong>Example:</strong> Asha pays ₹900 for a cab for Asha, Ben and Chetan (₹300 each). Ben pays ₹300 for snacks for Ben and Chetan (₹150 each). Asha is owed ₹600, so Ben pays Asha ₹150 and Chetan pays Asha ₹450.</p>
+   </div>
+   <div class="guide-card">
+    <h4>Shared Pot — chip in first</h4>
+    <p>For when everyone puts in a fixed amount up front and one person holds the money and pays for things. PantherSplits reconciles the pot at the end, whether it was underspent or overspent.</p>
+    <p class="example"><strong>Example:</strong> Four friends put in ₹500 each (₹2,000) and Raj holds the pot. They spend ₹1,600, leaving ₹400, so Raj refunds ₹100 to each of the other three. If they had spent ₹2,400 instead, each of the other three would pay Raj ₹100.</p>
+   </div>
+  </div>
+ </section>
+
+ <section aria-labelledby="steps-title">
+  <h3 id="steps-title">How to split expenses with PantherSplits</h3>
+  <ol class="guide-steps">
+   <li><strong>Add people.</strong> Type each name and press Enter. In Shared Pot mode, set how much each person puts in and mark who holds the pot.</li>
+   <li><strong>Log expenses.</strong> Enter what it was and the amount. Choose who paid (in Split mode) and who it was for.</li>
+   <li><strong>Check the balances.</strong> See what each person paid, their fair share, and whether they get money back or owe.</li>
+   <li><strong>Settle up and share.</strong> Follow the suggested payments and share the summary on WhatsApp or as a link.</li>
+  </ol>
+ </section>
+
+ <section aria-labelledby="features-title">
+  <h3 id="features-title">Features</h3>
+  <ul class="guide-features">
+   <li>Completely free — no account, no signup, no app to install</li>
+   <li>Private — your data stays in your browser, nothing is uploaded</li>
+   <li>Split an expense among everyone or only some people</li>
+   <li>Shared Pot mode with automatic leftover and overspend reconciliation</li>
+   <li>Fewest payments needed to settle up</li>
+   <li>Share on WhatsApp or with a link that opens the same split</li>
+   <li>Save a project as a file and import it later</li>
+   <li>Works on phones, tablets and computers, with ₹ formatting</li>
+  </ul>
+ </section>
+
+ <section id="faq" aria-labelledby="faq-title">
+  <h3 id="faq-title">Frequently asked questions</h3>
+  <div class="faq">
+   <details><summary>Is PantherSplits free?</summary><p>Yes. PantherSplits is completely free to use. There is no account, no signup and no subscription.</p></details>
+   <details><summary>Do I need to download an app or create an account?</summary><p>No. It runs in any modern web browser on your phone or computer. Just open the page and start adding people and expenses.</p></details>
+   <details><summary>Where is my data stored?</summary><p>Only in your own browser, on your device. Nothing is uploaded to a server. When you share a link, the whole project is packed into the link itself, so share it only with people you trust.</p></details>
+   <details><summary>How does PantherSplits work out who owes whom?</summary><p>It adds up what each person paid and what each person's fair share is, then suggests the fewest payments needed to make everyone even.</p></details>
+   <details><summary>What is Shared Pot mode?</summary><p>Use Shared Pot when everyone puts money in first, for example ₹500 each, and one person holds the pot and pays for things. PantherSplits then tells you how much the holder should refund if money is left over, or how much everyone should top up if the pot was overspent.</p></details>
+   <details><summary>Can I split an expense between only some people?</summary><p>Yes. In both modes you can choose who each expense was for, so an item only a few people shared is divided only among them.</p></details>
+   <details><summary>How do I share the result with my group?</summary><p>Tap WhatsApp to send a full summary of expenses and who pays whom, or tap Copy link to share a link that opens the same split in anyone's browser.</p></details>
+  </div>
+ </section>
+</article>
 </main>
 
-<footer class="site-footer">🐾 <strong>PantherSplits</strong> — split fair, split fast, no signup required.</footer>
+<footer class="site-footer">
+ <nav aria-label="Page sections"><a href="#how-it-works">How it works</a> · <a href="#faq">FAQ</a></nav>
+ 🐾 <strong>PantherSplits</strong> — free bill and group expense splitter. Split fair, split fast, no signup required.
+</footer>
 </div>
 
 <script>
@@ -998,6 +1165,8 @@ function renderMode(){
  document.body.dataset.mode=data.mode;
  document.getElementById("segSplit").classList.toggle("active",data.mode==="split");
  document.getElementById("segPool").classList.toggle("active",data.mode==="pool");
+ document.getElementById("segSplit").setAttribute("aria-pressed",data.mode==="split");
+ document.getElementById("segPool").setAttribute("aria-pressed",data.mode==="pool");
  document.getElementById("step1title").textContent=data.mode==="pool"?"Who's chipping in?":"Who's splitting?";
  document.getElementById("step1hint").textContent=data.mode==="pool"
    ? "Add everyone and what each puts into the pot. Tap ★ to mark who's holding the money."
