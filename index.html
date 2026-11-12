@@ -159,6 +159,10 @@ header.hero{
 .icon-btn-round svg{width:16px;height:16px}
 .icon-btn-round:hover{background:var(--amber);color:var(--jungle-900);border-color:var(--amber);transform:translateY(-1px)}
 .icon-btn-round:active{transform:translateY(0)}
+.install-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:999px;border:1px solid rgba(242,177,52,.6);background:rgba(242,177,52,.14);color:var(--amber-soft);font-weight:800;font-size:13px;cursor:pointer;transition:background .15s,color .15s}
+.install-btn svg{width:15px;height:15px}
+.install-btn:hover{background:var(--amber);color:var(--jungle-900)}
+.install-btn[hidden]{display:none}
 
 /* ---------- mode toggle + new split ---------- */
 .mode-bar{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;padding:16px 16px 0}
@@ -474,6 +478,10 @@ footer.site-footer a:hover{text-decoration:underline}
    </div>
   </div>
   <div class="hero-actions">
+   <button type="button" class="install-btn" id="installBtn" onclick="installApp()" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><rect x="4" y="17" width="16" height="4" rx="1.5"/></svg>
+    Install app
+   </button>
    <button class="icon-btn-round" onclick="saveProject()" title="Save project to a file" aria-label="Save project to a file">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11l3 3v13H5V4z"/><path d="M8 4v5h7V4"/><path d="M8 13h8v7H8z"/></svg>
    </button>
@@ -1460,6 +1468,29 @@ if(!loadSharedProject()){
 }
 render();
 window.addEventListener("hashchange",()=>{if(location.hash.startsWith("#share=")&&loadSharedProject())render();});
+
+/* ---------- offline + install ---------- */
+if("serviceWorker" in navigator&&location.protocol!=="file:"){
+ window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+}
+// Chrome/Edge/Android offer an install prompt we can trigger from our own button.
+let installEvt=null;
+window.addEventListener("beforeinstallprompt",ev=>{
+ ev.preventDefault();installEvt=ev;
+ document.getElementById("installBtn").hidden=false;
+});
+async function installApp(){
+ if(!installEvt)return;
+ installEvt.prompt();
+ await installEvt.userChoice.catch(()=>{});
+ installEvt=null;document.getElementById("installBtn").hidden=true;
+}
+window.addEventListener("appinstalled",()=>{
+ document.getElementById("installBtn").hidden=true;
+ toast("PantherSplits installed — open it from your home screen or apps");
+});
+window.addEventListener("offline",()=>toast("You're offline — everything still works and saves on this device"));
+window.addEventListener("online",()=>toast("Back online"));
 </script>
 </body>
 </html>
